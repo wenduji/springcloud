@@ -1,7 +1,7 @@
-package com.example.demo.mybatis.controller;
+package com.example.demo.test.controller;
 
-import com.example.demo.mybatis.entity.Person;
-import com.example.demo.mybatis.service.PersonService;
+import com.example.demo.test.entity.Person;
+import com.example.demo.test.service.PersonService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -44,7 +44,7 @@ public class PersonRestController {
         System.out.println(person1);
 
         Person person2 = personService.select(id);
-        // 不执行sql
+        // 不执行sql，从缓存中读取
         System.out.println(person2);
     }
 

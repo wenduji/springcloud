@@ -1,4 +1,4 @@
-package com.example.demo.mybatis.entity;
+package com.example.demo.test.entity;
 
 import lombok.Getter;
 import lombok.Setter;

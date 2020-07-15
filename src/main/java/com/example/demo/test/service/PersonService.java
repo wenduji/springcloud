@@ -1,7 +1,7 @@
-package com.example.demo.mybatis.service;
+package com.example.demo.test.service;
 
-import com.example.demo.mybatis.entity.Person;
-import com.example.demo.mybatis.mapper.PersonMapper;
+import com.example.demo.test.entity.Person;
+import com.example.demo.test.mapper.PersonMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
