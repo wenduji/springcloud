@@ -1,0 +1,14 @@
+server:
+  port: 9999
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/study_test?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  type-aliases-package: com.example.demo.mapping
+  mapper-locations: classpath*:mapping/**/*Mapper.xml
+  configuration:
+#    cache-enabled: true #开启MyBatis二级缓存
+    cache-enabled: false #关闭MyBatis二级缓存
