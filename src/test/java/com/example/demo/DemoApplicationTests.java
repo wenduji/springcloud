@@ -8,13 +8,7 @@ class DemoApplicationTests {
 
     @Test
     void contextLoads() {
-        try {
-            int num = 1 / 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
 
-        }
     }
 
 }
