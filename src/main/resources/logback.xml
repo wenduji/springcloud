@@ -70,7 +70,7 @@
         </encoder>
     </appender>
 
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="FILE-INFO-ROLLING" />
         <appender-ref ref="FILE-ERROR-ROLLING" />
         <appender-ref ref="CONSOLE_INFO" />
