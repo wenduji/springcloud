@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author hjs
  * @date 2020/7/20
- * @description
+ * @description Spring AOP：运行期动态代理
  */
 @Aspect
 @Component

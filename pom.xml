@@ -86,10 +86,13 @@
             <version>3.8.0</version>
         </dependency>
 
+        <!--Spring AOP-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+
+        <!--AspectJ-->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
