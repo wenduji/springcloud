@@ -1,5 +1,6 @@
 package com.example.demo.test.controller;
 
+import com.example.demo.result.Result;
 import com.example.demo.test.entity.Person;
 import com.example.demo.test.service.PersonService;
 import org.springframework.web.bind.annotation.*;
@@ -49,10 +50,11 @@ public class PersonRestController {
     }
 
     @PostMapping
-    public void save(){
+    public Result save(){
         Person person = new Person();
         person.setName("b");
         person.setAge(31);
         personService.insert(person);
+        return Result.success();
     }
 }

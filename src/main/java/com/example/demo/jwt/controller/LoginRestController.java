@@ -1,7 +1,10 @@
 package com.example.demo.jwt.controller;
 
+import com.example.demo.exception.ApiException;
 import com.example.demo.jwt.entity.HttpHeader;
 import com.example.demo.jwt.util.JWTUtils;
+import com.example.demo.result.Result;
+import com.example.demo.result.ResultWrapper;
 import com.example.demo.test.entity.Person;
 import com.example.demo.test.service.PersonService;
 import org.springframework.web.bind.annotation.*;
@@ -22,18 +25,17 @@ public class LoginRestController {
     private PersonService personService;
 
     @PostMapping
-    public Map<String, String> login(@RequestBody Person person) {
-        return personService.createJWTByPersonInfo(person);
+    public ResultWrapper login(@RequestBody Person person) {
+        return new ResultWrapper<>(personService.createJWTByPersonInfo(person));
     }
 
     @GetMapping("/refresh-token")
-    public String refreshToken(HttpServletRequest httpServletRequest) {
+    public ResultWrapper refreshToken(HttpServletRequest httpServletRequest) {
         String refreshToken = httpServletRequest.getHeader(HttpHeader.HEADER_REFRESH_TOKEN);
         try {
-            return JWTUtils.getAccessTokenByRefreshToken(refreshToken);
+            return new ResultWrapper<>(JWTUtils.getAccessTokenByRefreshToken(refreshToken));
         } catch (Exception e) {
-            // 解析失败，抛出异常
-            throw e;
+            throw new ApiException(e);
         }
     }
 }
