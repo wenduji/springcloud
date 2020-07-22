@@ -4,3 +4,16 @@ server:
 spring:
   application:
     name: eureka-server
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+  client:
+    #该服务为注册中心，增加此行代表不在注册中心注册自己
+    register-with-eureka: false
+    #由于注册中心的职责是维护实例，为FALSE代表其不用去检索服务
+    fetch-registry: false
+    service-url:
+      #代表注册到eureka服务端的地址
+      defaultZone: http://${eureka.instance.ip-address}:${server.port}/eureka/
