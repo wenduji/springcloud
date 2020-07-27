@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import javax.annotation.Resource;
+import java.nio.charset.Charset;
 
 /**
  * @author hjs
@@ -32,8 +33,9 @@ public class JWTTest {
                 MockMvcRequestBuilders.post("/login")
                         .contentType("application/json")
                         .content(person)
+                        .characterEncoding("utf-8")
         ).andReturn();
 
-        System.out.println("结果：" + mvcResult.getResponse().getContentAsString());
+        System.out.println("结果：" + mvcResult.getResponse().getContentAsString(Charset.forName("utf-8")));
     }
 }

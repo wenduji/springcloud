@@ -1,5 +1,5 @@
 server:
-  port: 7777
+  port: 7000
 
 spring:
   application:
@@ -9,11 +9,24 @@ eureka:
   instance:
     prefer-ip-address: true
     ip-address: 127.0.0.1
+    #向服务端发送心跳信息的频率，表示客户端仍存活
+    lease-renewal-interval-in-seconds: 10
+    #表示eureka server至上一次收到client的心跳之后，等待下一次心跳的超时时间，
+    #在这个时间内若没收到下一次心跳，则将移除该instance
+    #该值至少应该大于leaseRenewalIntervalInSeconds（心跳时间）
+    lease-expiration-duration-in-seconds: 15
   client:
     #该服务为注册中心，增加此行代表不在注册中心注册自己
     register-with-eureka: false
     #由于注册中心的职责是维护实例，为FALSE代表其不用去检索服务
     fetch-registry: false
+    #从服务端去检索注册信息的频率
+    registry-fetch-interval-seconds: 5
     service-url:
       #代表注册到eureka服务端的地址
       defaultZone: http://${eureka.instance.ip-address}:${server.port}/eureka/
+  server:
+    #应对网络异常的安全保护措施，宁可同时保留所有微服务（健康的微服务和不健康的微服务都会保留），
+    #也不盲目注销任何健康的微服务。使用自我保护模式，可以让Eureka集群更加的健壮、稳定。
+    #当网络故障恢复后，该Eureka Server节点会自动退出自我保护模式。
+    enable-self-preservation: true
