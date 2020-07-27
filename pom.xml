@@ -12,11 +12,12 @@
     <artifactId>demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>demo</name>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <description>Demo project for Spring Boot</description>
 
     <modules>
         <module>eureka</module>
+        <module>common</module>
     </modules>
 
     <properties>
