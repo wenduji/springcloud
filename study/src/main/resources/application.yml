@@ -1,6 +1,8 @@
 server:
-  port: 9999
+  port: 7002
 spring:
+  application:
+    name: study-service
   datasource:
     url: jdbc:mysql://localhost:3306/study_test?serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
     username: root
@@ -17,3 +19,18 @@ mybatis:
     # 关闭积极加载：开启时，只要触发了具有懒加载特性的对象，级联效果就会触发
     # 关闭时：每种属性按需加载，不调用就不加载
 #    aggressive-lazy-loading: false
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 15
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://${eureka.instance.ip-address}:7000/eureka/
+  server:
+    enable-self-preservation: true
