@@ -1,9 +1,9 @@
 package com.example.study.jwt.controller;
 
-import com.example.study.exception.ApiException;
+import com.example.common.exception.ApiException;
 import com.example.study.jwt.entity.HttpHeader;
 import com.example.study.jwt.util.JWTUtils;
-import com.example.study.result.ResultWrapper;
+import com.example.common.result.ResultWrapper;
 import com.example.study.test.entity.Person;
 import com.example.study.test.service.PersonService;
 import org.springframework.web.bind.annotation.*;

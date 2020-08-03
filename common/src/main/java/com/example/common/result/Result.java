@@ -1,6 +1,6 @@
-package com.example.study.result;
+package com.example.common.result;
 
-import com.example.study.constant.ErrorCode;
+import com.example.common.constant.ErrorCode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;

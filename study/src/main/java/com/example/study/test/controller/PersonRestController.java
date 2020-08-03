@@ -1,6 +1,6 @@
 package com.example.study.test.controller;
 
-import com.example.study.result.Result;
+import com.example.common.result.Result;
 import com.example.study.test.entity.Person;
 import com.example.study.test.service.PersonService;
 import org.springframework.web.bind.annotation.GetMapping;

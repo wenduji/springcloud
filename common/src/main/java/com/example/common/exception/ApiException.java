@@ -1,7 +1,7 @@
-package com.example.study.exception;
+package com.example.common.exception;
 
-import com.example.study.constant.ErrorCode;
-import com.example.study.result.ResultWrapper;
+import com.example.common.constant.ErrorCode;
+import com.example.common.result.ResultWrapper;
 import lombok.Getter;
 import lombok.Setter;
 
