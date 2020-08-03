@@ -1,9 +1,9 @@
 server:
-  port: 7000
+  port: 6000
 
 spring:
   application:
-    name: eureka-server
+    name: eureka-service
 
 eureka:
   instance:

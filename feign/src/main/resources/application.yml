@@ -1,5 +1,5 @@
 server:
-  port: 7001
+  port: 6001
 
 spring:
   application:
@@ -16,7 +16,7 @@ eureka:
     fetch-registry: true
     registry-fetch-interval-seconds: 5
     service-url:
-      defaultZone: http://${eureka.instance.ip-address}:7000/eureka/
+      defaultZone: http://${eureka.instance.ip-address}:6000/eureka/
   server:
     enable-self-preservation: true
 
