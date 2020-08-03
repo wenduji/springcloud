@@ -9,10 +9,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>study</artifactId>
+    <artifactId>flowable</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>study</name>
-    <description>Study project for Spring Boot</description>
+    <name>flowable</name>
+    <description>Flowable project for Spring Boot</description>
 
     <dependencies>
         <dependency>
@@ -22,9 +22,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>2.0.1</version>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-engine</artifactId>
+            <version>6.3.0</version>
         </dependency>
     </dependencies>
 

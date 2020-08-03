@@ -20,6 +20,7 @@
         <module>common</module>
         <module>feign</module>
         <module>gateway</module>
+        <module>flowable</module>
     </modules>
 
     <properties>
