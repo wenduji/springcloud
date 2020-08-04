@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+import java.util.List;
+
 /**
  * @author hjs
  * @date 2020/8/3
@@ -14,12 +16,10 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @Getter
 public class BpmnContent {
-    @Value("${xml_head}")
-    private String xmlHead;
 
-    @Value("${definitions_head}")
-    private String definitionsHead;
+    @Value("#{'${definitions_keys}'.split(',')}")
+    private List<String> definitionsKeys;
 
-    @Value("${definitions_tail}")
-    private String definitionsTail;
+    @Value("#{'${definitions_values}'.split(',')}")
+    private List<String> definitionsValues;
 }

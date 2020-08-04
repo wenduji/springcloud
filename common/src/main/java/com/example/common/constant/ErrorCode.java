@@ -10,7 +10,8 @@ import lombok.Getter;
 @Getter
 public enum ErrorCode {
     OTHER_ERROR("00001", "其他未知错误"),
-    SYSTEM_ERROR("10000", "系统异常");
+    SYSTEM_ERROR("10000", "系统异常"),
+    FLOW_CREATE_ERROR("20000", "创建流程失败");
 
     private String code;
 
