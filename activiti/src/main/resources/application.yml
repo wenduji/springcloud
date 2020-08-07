@@ -1,0 +1,31 @@
+server:
+  port: 6005
+
+spring:
+  application:
+    name: flowable-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/activiti?serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+    username: root
+    password: 123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 15
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://${eureka.instance.ip-address}:6000/eureka/
+  server:
+    enable-self-preservation: true
+
+
+
+
+
+
