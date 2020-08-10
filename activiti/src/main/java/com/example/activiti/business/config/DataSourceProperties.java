@@ -1,4 +1,4 @@
-package com.example.activiti.config;
+package com.example.activiti.business.config;
 
 import lombok.Getter;
 import lombok.Setter;

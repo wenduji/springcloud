@@ -1,6 +1,6 @@
-package com.example.activiti.config;
+package com.example.activiti.business.config;
 
-import com.example.activiti.context.ActivitiContext;
+import com.example.activiti.business.context.ActivitiContext;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngineConfiguration;
 import org.activiti.spring.SpringProcessEngineConfiguration;
