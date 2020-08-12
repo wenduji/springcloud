@@ -8,12 +8,10 @@ import org.activiti.engine.ActivitiException;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Model;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -29,7 +27,7 @@ public class ModelEditorJsonRestResource implements ModelDataJsonConstants {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @RequestMapping(value = "/model/{modelId}/json", method = RequestMethod.GET, produces = "application/json")
+    @GetMapping(value = "/model/{modelId}/json", produces = "application/json")
     public ObjectNode getEditorJson(@PathVariable String modelId) {
         ObjectNode modelNode = null;
 
@@ -47,7 +45,6 @@ public class ModelEditorJsonRestResource implements ModelDataJsonConstants {
                 ObjectNode editorJsonNode = (ObjectNode) objectMapper.readTree(
                         new String(repositoryService.getModelEditorSource(model.getId()), "utf-8"));
                 modelNode.put("model", editorJsonNode);
-
             } catch (Exception e) {
                 log.error("Error creating model JSON", e);
                 throw new ActivitiException("Error creating model JSON", e);

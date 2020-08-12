@@ -11,8 +11,6 @@ import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 @Controller
 @RequestMapping("/models")
@@ -35,18 +32,6 @@ public class MyActivitiController {
 
     @Resource
     private ObjectMapper objectMapper;
-
-    @RequestMapping("/modelList")
-    public String modelList(org.springframework.ui.Model model, HttpServletRequest request){
-        log.info("-------------列表页-------------");
-        List<Model> models = repositoryService.createModelQuery().orderByCreateTime().desc().list();
-        model.addAttribute("models",models);
-        String info = request.getParameter("info");
-        if(StringUtils.isNotEmpty(info)){
-            model.addAttribute("info",info);
-        }
-        return "model/list";
-    }
 
     @RequestMapping("/create")
     public void newModel(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
@@ -81,27 +66,16 @@ public class MyActivitiController {
                    "http://b3mn.org/stencilset/bpmn2.0#");
            editorNode.put("stencilset", stencilSetNode);
            repositoryService.addModelEditorSource(id, editorNode.toString().getBytes("utf-8"));
-
            response.sendRedirect(request.getContextPath() + "/static/modeler.html?modelId=" + id);
        }catch (IOException e){
            e.printStackTrace();
            log.info("模型创建失败！");
        }
-
     }
-
-    @RequestMapping("/delete/{id}")
-    public @ResponseBody
-    String deleteModel(@PathVariable("id")String id){
-        repositoryService.deleteModel(id);
-        return "删除成功！";
-    }
-
 
     @RequestMapping("/deployment/{id}")
-    public @ResponseBody
-    String deploy(@PathVariable("id")String id) throws Exception {
-
+    @ResponseBody
+    public String deploy(@PathVariable("id")String id) throws Exception {
         //获取模型
         Model modelData = repositoryService.getModel(id);
         byte[] bytes = repositoryService.getModelEditorSource(modelData.getId());
@@ -111,7 +85,6 @@ public class MyActivitiController {
         }
 
         JsonNode modelNode = new ObjectMapper().readTree(bytes);
-
         BpmnModel model = new BpmnJsonConverter().convertToBpmnModel(modelNode);
         if(model.getProcesses().size()==0){
             return "数据模型不符要求，请至少设计一条主线流程。";
@@ -128,19 +101,4 @@ public class MyActivitiController {
         repositoryService.saveModel(modelData);
         return "流程发布成功";
     }
-
-    @RequestMapping("/start/{id}")
-    public @ResponseBody
-    String startProcess(@PathVariable("id") String id){
-        try {
-
-
-        }catch (Exception e){
-            e.printStackTrace();
-            return "流程启动失败！";
-        }
-        return "流程启动成功";
-    }
-
-
 }
