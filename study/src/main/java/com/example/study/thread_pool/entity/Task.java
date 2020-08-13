@@ -16,7 +16,7 @@ public class Task implements Runnable {
     public void run() {
         System.out.println("正在执行thread task..." + num);
         try {
-            Thread.currentThread().sleep(300);
+            Thread.sleep(300);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

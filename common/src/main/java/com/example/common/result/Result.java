@@ -52,6 +52,6 @@ public class Result implements Serializable {
     }
 
     public boolean isSuccess() {
-        return this.getCode().equals("200");
+        return "200".equals(this.getCode());
     }
 }

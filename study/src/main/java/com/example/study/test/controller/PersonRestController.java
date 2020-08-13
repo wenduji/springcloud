@@ -28,13 +28,13 @@ public class PersonRestController {
     @GetMapping("/caches/level/1")
     public void primaryCache() {
         Integer id = 1;
-        Date firstDate = new Date();
+        long firstDateMillis = System.currentTimeMillis();
         personService.select(id);
-        System.out.println(new Date().getTime() - firstDate.getTime() + "ms");
+        System.out.println(System.currentTimeMillis() - firstDateMillis + "ms");
 
-        Date secondDate = new Date();
+        long secondDateMillis = System.currentTimeMillis();
         personService.select(id);
-        System.out.println(new Date().getTime() - secondDate.getTime() + "ms");
+        System.out.println(System.currentTimeMillis() - secondDateMillis + "ms");
     }
 
     /**
