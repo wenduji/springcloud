@@ -1,7 +1,6 @@
 package com.example.activiti.business.config;
 
 import com.example.activiti.business.context.ActivitiContext;
-import com.example.activiti.business.listener.ProcessEngineLifeCycleListener;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngineConfiguration;
 import org.activiti.spring.SpringProcessEngineConfiguration;
@@ -39,8 +38,6 @@ public class ActivitiConfig {
         springProcessEngineConfiguration
                 .setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
         springProcessEngineConfiguration.setTransactionManager(transactionManager);
-        springProcessEngineConfiguration
-                .setProcessEngineLifecycleListener(new ProcessEngineLifeCycleListener());
         return springProcessEngineConfiguration;
     }
 

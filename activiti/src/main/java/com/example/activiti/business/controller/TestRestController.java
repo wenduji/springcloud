@@ -32,7 +32,7 @@ public class TestRestController {
 
     @PostMapping
     public Result finish() {
-        String processKey = "Test3";
+        String processKey = "Test5";
         String applicantId = "20";
         ProcessInstance processInstance = activitiService.startProcessByKeyAndUserId(processKey, applicantId);
         String processInstanceId = processInstance.getId();

@@ -1,5 +1,6 @@
 package com.example.activiti.business.context;
 
+import com.example.activiti.business.listener.ProcessEngineLifeCycleListener;
 import org.activiti.engine.*;
 import org.activiti.spring.SpringProcessEngineConfiguration;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,8 @@ public class ActivitiContext {
         if (processEngine == null) {
             synchronized (ActivitiContext.class) {
                 if (processEngine == null) {
+                    springProcessEngineConfiguration
+                            .setProcessEngineLifecycleListener(new ProcessEngineLifeCycleListener());
                     processEngine = springProcessEngineConfiguration.buildProcessEngine();
                 }
             }
