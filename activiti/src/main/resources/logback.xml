@@ -1,6 +1,6 @@
 <configuration>
     <!--定义日志文件的存储位置-->
-    <property name="LOG_PATH" value="D://logs//study"/>
+    <property name="LOG_PATH" value="D://logs//activiti"/>
     <property name="LOG_INFO_FILE" value="info.log"/>
     <property name="LOG_ERROR_FILE" value="error.log"/>
 

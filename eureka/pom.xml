@@ -49,6 +49,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.example.eureka.EurekaApplication</mainClass>
+                    <finalName>eureka-${soft.version}</finalName>
+                </configuration>
             </plugin>
         </plugins>
     </build>

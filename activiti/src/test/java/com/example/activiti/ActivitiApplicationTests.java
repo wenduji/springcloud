@@ -20,15 +20,42 @@ class ActivitiApplicationTests {
 
     @Test
     void deploy() throws Exception {
+        String bpmnFileNamePrefix = "sequential";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis/deploy/test")
+                MockMvcRequestBuilders.post("/rest/activitis/deploy/" + bpmnFileNamePrefix)
+        );
+    }
+
+    /**
+     * 测试人员角色：N、A、B、C
+     * 申请组成员：N、A、B
+     * 审批组成员：A、B、C
+     * <p>
+     * 对应applicantId为 n、a、b、c
+     */
+
+    @Test
+    void start() throws Exception {
+        String starter = "n";
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/rest/activitis/start/applicantId/" + starter)
         );
     }
 
     @Test
-    void finish() throws Exception {
+    void approvePass() throws Exception {
+        String approver = "c";
+        String processInstanceId = "2501";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis")
+                MockMvcRequestBuilders.post("/rest/activitis/approve-pass/approverId/" + approver + "/processInstanceId/" + processInstanceId)
+        );
+    }
+
+    @Test
+    void approveRefuse() throws Exception {
+        String processInstanceId = "";
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/rest/activitis/approve-refuse/processInstanceId/" + processInstanceId)
         );
     }
 }

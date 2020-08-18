@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 @Service("beExecutionListener")
 @Slf4j
 public class BeExecutionListener implements ExecutionListener {
+
+    private static final long serialVersionUID = -8537213406111420167L;
+
     @Override
     public void notify(DelegateExecution execution) {
         String eventName = execution.getEventName();

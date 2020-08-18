@@ -43,17 +43,13 @@
         </dependencies>
     </dependencyManagement>
 
-    <build>
+    <!--<build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>com.example.demo.DemoApplication</mainClass>
-                    <finalName>demo-0.0.1-SNAPSHOT</finalName>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                 <version>3.1</version>
             </plugin>
         </plugins>
-    </build>
-
+    </build>-->
 </project>
