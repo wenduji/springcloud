@@ -14,7 +14,7 @@ import java.util.List;
  * @description
  */
 @Service
-public class TestRoleService {
+public class RoleService {
 
     @Resource
     private ActivitiService activitiService;

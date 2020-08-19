@@ -1,6 +1,6 @@
 package com.example.activiti.business.listener;
 
-import com.example.activiti.business.service.TestRoleService;
+import com.example.activiti.business.service.RoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
@@ -20,7 +20,7 @@ public class UserTaskListener implements TaskListener {
     private static final long serialVersionUID = 3751958445937091039L;
 
     @Resource
-    private TestRoleService testRoleService;
+    private RoleService testRoleService;
 
     @Override
     public void notify(DelegateTask delegateTask) {
@@ -28,12 +28,6 @@ public class UserTaskListener implements TaskListener {
         if (EVENTNAME_ASSIGNMENT.equals(eventName)) {
             // 任务配置处理人，比create先执行
             log.info("task assignment...");
-
-            // 配置任务负责人
-            /*String processKey = "sequential";
-            int index = testRoleService.indexInProcess(processKey, delegateTask.getName());
-            List<String> roleList = testRoleService.listRolesWithCurrentNode(index);
-            testRoleService.setUserTaskCandidateUsers(delegateTask, index, roleList);*/
         } else if (EVENTNAME_CREATE.equals(eventName)) {
             // 进入任务
             log.info("task create...");

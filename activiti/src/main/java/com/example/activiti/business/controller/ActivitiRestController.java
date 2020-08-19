@@ -1,9 +1,11 @@
 package com.example.activiti.business.controller;
 
+import com.example.activiti.business.constant.ActivitiConstant;
 import com.example.activiti.business.service.ActivitiService;
-import com.example.activiti.business.service.TestRoleService;
+import com.example.activiti.business.service.RoleService;
 import com.example.common.result.ResultWrapper;
 import com.example.common.utils.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,13 +24,14 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/rest/activitis")
-public class TestRestController {
+@Slf4j
+public class ActivitiRestController {
 
     @Resource
     private ActivitiService activitiService;
 
     @Resource
-    private TestRoleService testRoleService;
+    private RoleService testRoleService;
 
     @PostMapping("/deploy/{bpmnName}")
     public ResultWrapper<Deployment> deploy(@PathVariable String bpmnName) {
@@ -50,9 +53,9 @@ public class TestRestController {
         String userId = testRoleService.getDefaultNextApprover(applicantId);
         activitiService.claim(taskId, userId);
 
-        System.out.println("流程发起人ID：" + applicantId);
-        System.out.println("流程实例ID：" + processInstanceId);
-        System.out.println("下级审批人ID：" + userId);
+        log.info("流程发起人ID：" + applicantId);
+        log.info("流程实例ID：" + processInstanceId);
+        log.info("下级审批人ID：" + userId);
     }
 
     @PostMapping("/approve-pass/approverId/{approverId}/processInstanceId/{processInstanceId}")
@@ -66,19 +69,29 @@ public class TestRestController {
         Map<String, Object> variable = new HashMap<>();
         String nextHandlerId = testRoleService.getDefaultNextApprover(approverId);
         if (StringUtils.isNotEmpty(nextHandlerId)) {
-            variable.put("status", "loop");
-            System.out.println("下级审批人ID：" + nextHandlerId);
+            variable.put(ActivitiConstant.VARIABLE_KEY, ActivitiConstant.advice.ADVICE_LOOP);
+            activitiService.completeTaskWithVariable(taskId, variable);
+
+            taskId = activitiService.getTaskId(processInstanceId);
+            activitiService.claim(taskId, nextHandlerId);
+            log.info("下级审批人ID：" + nextHandlerId);
         } else {
-            variable.put("status", "pass");
+            variable.put(ActivitiConstant.VARIABLE_KEY, ActivitiConstant.advice.ADVICE_PASS);
+            activitiService.completeTaskWithVariable(taskId, variable);
         }
-        activitiService.completeTaskWithVariable(taskId, variable);
     }
 
     @PostMapping("/approve-refuse/processInstanceId/{processInstanceId}")
     public void approveRefuse(@PathVariable String processInstanceId) {
         String taskId = activitiService.getTaskId(processInstanceId);
         Map<String, Object> variable = new HashMap<>();
-        variable.put("status", "refuse");
+        variable.put(ActivitiConstant.VARIABLE_KEY, ActivitiConstant.advice.ADVICE_REFUSE);
         activitiService.completeTaskWithVariable(taskId, variable);
+    }
+
+    @PostMapping("/close/processInstanceId/{processInstanceId}")
+    public void close(@PathVariable String processInstanceId) {
+        String deleteReason = "撤回";
+        activitiService.deleteProcessInstance(processInstanceId, deleteReason);
     }
 }

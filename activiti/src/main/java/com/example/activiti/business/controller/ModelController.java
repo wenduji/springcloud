@@ -1,5 +1,8 @@
 package com.example.activiti.business.controller;
 
+import com.example.common.constant.ErrorCode;
+import com.example.common.result.Result;
+import com.example.common.result.ResultWrapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -12,6 +15,7 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,7 +29,8 @@ import java.nio.charset.StandardCharsets;
 @Controller
 @RequestMapping("/models")
 @Slf4j
-public class MyActivitiController {
+@CrossOrigin
+public class ModelController {
 
     @Resource
     private RepositoryService repositoryService;
@@ -34,7 +39,7 @@ public class MyActivitiController {
     private ObjectMapper objectMapper;
 
     @RequestMapping("/create")
-    public void newModel(HttpServletRequest request, HttpServletResponse response) {
+    public Result newModel(HttpServletRequest request, HttpServletResponse response) {
         try {
             //初始化一个空模型
             Model model = repositoryService.newModel();
@@ -66,28 +71,34 @@ public class MyActivitiController {
                     "http://b3mn.org/stencilset/bpmn2.0#");
             editorNode.set("stencilset", stencilSetNode);
             repositoryService.addModelEditorSource(id, editorNode.toString().getBytes(StandardCharsets.UTF_8));
+
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Cache-Control", "no-cache");
             response.sendRedirect(request.getContextPath() + "/static/modeler.html?modelId=" + id);
+            return Result.success();
         } catch (IOException e) {
             log.info("模型创建失败！");
+            log.error(e.getMessage());
             e.printStackTrace();
+            return Result.error(ErrorCode.FLOW_CREATE_ERROR);
         }
     }
 
-    @RequestMapping("/deployment/{id}")
+    @RequestMapping("/deployment/{modelId}")
     @ResponseBody
-    public String deploy(@PathVariable("id") String id) throws Exception {
+    public ResultWrapper deploy(@PathVariable String modelId) throws Exception {
         //获取模型
-        Model modelData = repositoryService.getModel(id);
+        Model modelData = repositoryService.getModel(modelId);
         byte[] bytes = repositoryService.getModelEditorSource(modelData.getId());
 
         if (bytes == null) {
-            return "模型数据为空，请先设计流程并成功保存，再进行发布。";
+            return ResultWrapper.success("模型数据为空，请先设计流程并成功保存，再进行发布。");
         }
 
         JsonNode modelNode = new ObjectMapper().readTree(bytes);
         BpmnModel model = new BpmnJsonConverter().convertToBpmnModel(modelNode);
         if (model.getProcesses().size() == 0) {
-            return "数据模型不符要求，请至少设计一条主线流程。";
+            return ResultWrapper.success("数据模型不符要求，请至少设计一条主线流程。");
         }
         byte[] bpmnBytes = new BpmnXMLConverter().convertToXML(model);
 
@@ -99,6 +110,6 @@ public class MyActivitiController {
                 .deploy();
         modelData.setDeploymentId(deployment.getId());
         repositoryService.saveModel(modelData);
-        return "流程发布成功";
+        return ResultWrapper.success("流程发布成功");
     }
 }

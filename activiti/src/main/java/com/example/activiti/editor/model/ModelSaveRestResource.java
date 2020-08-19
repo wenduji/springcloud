@@ -9,10 +9,8 @@ import org.activiti.engine.repository.Model;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.PNGTranscoder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +31,7 @@ public class ModelSaveRestResource implements ModelDataJsonConstants {
     private ObjectMapper objectMapper;
 
     @PutMapping(value = "/model/{modelId}/save")
-//    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.OK)
     public void saveModel(HttpServletRequest request, @PathVariable String modelId) {
         try {
             Model model = repositoryService.getModel(modelId);
@@ -56,7 +54,7 @@ public class ModelSaveRestResource implements ModelDataJsonConstants {
             ByteArrayOutputStream outStream = new ByteArrayOutputStream();
             TranscoderOutput output = new TranscoderOutput(outStream);
 
-            // Do the transformation
+            // Do the transformationapp
             transcoder.transcode(input, output);
             final byte[] result = outStream.toByteArray();
             repositoryService.addModelEditorSourceExtra(model.getId(), result);
