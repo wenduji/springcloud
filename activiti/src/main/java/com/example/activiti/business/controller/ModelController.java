@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
 
 @RestController
-@RequestMapping("/models")
+@RequestMapping("/rest/models")
 @Slf4j
 @CrossOrigin(origins = "http://localhost:8848", allowCredentials = "true", allowedHeaders = "*")
 public class ModelController {
