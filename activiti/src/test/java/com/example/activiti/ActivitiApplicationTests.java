@@ -74,4 +74,5 @@ class ActivitiApplicationTests {
                 MockMvcRequestBuilders.post("/models/deployment/" + modelId)
         );
     }
+
 }
