@@ -126,11 +126,16 @@
                 </configuration>
             </plugin>-->
             <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.3.0.RELEASE</version>
+                <!--<version>2.3.0.RELEASE</version>-->
                 <configuration>
                     <mainClass>com.example.activiti.ActivitiApplication</mainClass>
+                    <finalName>activiti-${soft.version}</finalName>
                 </configuration>
                 <!--<executions>
                     <execution>

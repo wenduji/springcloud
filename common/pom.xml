@@ -85,5 +85,25 @@
             <artifactId>swagger-spring-boot-starter</artifactId>
             <version>2.1.5-RELEASE</version>
         </dependency>
+
+        <!-- 分页pagehelper版本1.1.2 JDK9以上时pagehelper需使用1.2.3及以上版本-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.11</version>
+        </dependency>
     </dependencies>
+
+    <!--<build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.example.eureka.EurekaApplication</mainClass>
+                    <finalName>eureka-${soft.version}</finalName>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>-->
 </project>

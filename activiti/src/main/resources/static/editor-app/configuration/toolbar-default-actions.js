@@ -261,7 +261,7 @@ KISBPM.TOOLBAR = {
         },
         
         closeEditor: function(services) {
-        	window.location.href = "/page/models/list";
+            window.history.go(-1);
         },
         
         /**
@@ -326,7 +326,7 @@ var SaveModelCtrl = [ '$rootScope', '$scope', '$http', '$route', '$location',
 
     $scope.saveAndClose = function () {
     	$scope.save(function() {
-    		window.location.href = "/page/models/list";
+            window.history.go(-1);
     	});
     };
     $scope.save = function (successCallback) {

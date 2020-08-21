@@ -1,6 +1,12 @@
 package com.example.activiti.business.controller;
 
+import com.example.activiti.business.entity.ModelVO;
+import com.example.activiti.business.service.ActivitiService;
+import com.example.common.page.Page;
+import com.example.common.page.PageInfo;
+import com.example.common.page.PageUtils;
 import com.example.common.result.ResultWrapper;
+import com.example.common.utils.JSONUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -16,6 +22,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/rest/models")
@@ -28,6 +37,22 @@ public class ModelController {
 
     @Resource
     private ObjectMapper objectMapper;
+
+    @Resource
+    private ActivitiService activitiService;
+
+    @GetMapping("/list")
+    public ResultWrapper<PageInfo<ModelVO>> list(@ModelAttribute Page page) {
+        PageUtils.startPage(page);
+        List<Map<String, String>> modelList = activitiService.findModelList();
+        List<ModelVO> list = new ArrayList<>(modelList.size());
+        for (Map<String, String> map : modelList) {
+            ModelVO modelVO = JSONUtils.obj2pojo(map, ModelVO.class);
+            list.add(modelVO);
+        }
+        PageInfo<ModelVO> pageInfo = new PageInfo<>(list);
+        return ResultWrapper.success(pageInfo);
+    }
 
     @GetMapping("/create")
     public ResultWrapper newModel() {

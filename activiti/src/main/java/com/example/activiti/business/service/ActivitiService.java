@@ -11,6 +11,7 @@ import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricVariableInstance;
 import org.activiti.engine.history.HistoricVariableInstanceQuery;
 import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.repository.Model;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Comment;
@@ -346,4 +347,22 @@ public class ActivitiService {
         }
         return flowList;
     }
+
+    public List<Map<String, String>> findModelList() {
+        List<Model> modelList = ActivitiContext.getRepositoryService()
+                .createModelQuery().orderByCreateTime().desc().list();
+        Map<String, String> map;
+        List<Map<String, String>> models = new ArrayList<>(modelList.size());
+        for (Model model : modelList) {
+            map = new HashMap<>();
+            map.put("modelID", model.getId());
+            map.put("processKey", model.getKey());
+            map.put("processName", model.getName());
+            map.put("createTime", String.valueOf(model.getCreateTime().getTime()));
+            map.put("processStatus", null);
+            models.add(map);
+        }
+        return models;
+    }
+
 }
