@@ -18,24 +18,24 @@ public class Result implements Serializable {
 
     private static final long serialVersionUID = -923442879040743200L;
 
-    private String code;
+    private String statusCode;
 
     private String message;
 
     public void setCode(String code) {
-        this.code = code;
+        this.statusCode = code;
     }
 
     public void setCode(int code) {
-        this.code = String.valueOf(code);
+        this.statusCode = String.valueOf(code);
     }
 
     public Result(){
 
     }
 
-    public Result(String code, String message){
-        this.code = code;
+    public Result(String statusCode, String message){
+        this.statusCode = statusCode;
         this.message = message;
     }
 
@@ -52,6 +52,6 @@ public class Result implements Serializable {
     }
 
     public boolean isSuccess() {
-        return "200".equals(this.getCode());
+        return "200".equals(this.getStatusCode());
     }
 }

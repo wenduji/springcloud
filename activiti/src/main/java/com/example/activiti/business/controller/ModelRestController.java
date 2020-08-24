@@ -4,7 +4,6 @@ import com.example.activiti.business.entity.ModelVO;
 import com.example.activiti.business.service.ActivitiService;
 import com.example.common.page.Page;
 import com.example.common.page.PageInfo;
-import com.example.common.page.PageUtils;
 import com.example.common.result.ResultWrapper;
 import com.example.common.utils.JSONUtils;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -22,15 +21,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/rest/models")
 @Slf4j
-@CrossOrigin(origins = "http://localhost:8848", allowCredentials = "true", allowedHeaders = "*")
-public class ModelController {
+//@CrossOrigin(origins = "http://localhost:8848", allowCredentials = "true", allowedHeaders = "*")
+public class ModelRestController {
 
     @Resource
     private RepositoryService repositoryService;
@@ -43,14 +40,17 @@ public class ModelController {
 
     @GetMapping("/list")
     public ResultWrapper<PageInfo<ModelVO>> list(@ModelAttribute Page page) {
-        PageUtils.startPage(page);
-        List<Map<String, String>> modelList = activitiService.findModelList();
-        List<ModelVO> list = new ArrayList<>(modelList.size());
-        for (Map<String, String> map : modelList) {
+        com.github.pagehelper.Page<Map<String, String>> pageList =
+                activitiService.findModelList((page.getPageNum() - 1) * page.getPageSize(),
+                        page.getPageSize());
+
+        com.github.pagehelper.Page<ModelVO> modelVOList = new com.github.pagehelper.Page<>();
+        modelVOList.setTotal(pageList.getTotal());
+        for (Map<String, String> map : pageList) {
             ModelVO modelVO = JSONUtils.obj2pojo(map, ModelVO.class);
-            list.add(modelVO);
+            modelVOList.add(modelVO);
         }
-        PageInfo<ModelVO> pageInfo = new PageInfo<>(list);
+        PageInfo<ModelVO> pageInfo = new PageInfo<>(modelVOList);
         return ResultWrapper.success(pageInfo);
     }
 
@@ -86,10 +86,10 @@ public class ModelController {
                 "http://b3mn.org/stencilset/bpmn2.0#");
         editorNode.set("stencilset", stencilSetNode);
         repositoryService.addModelEditorSource(id, editorNode.toString().getBytes(StandardCharsets.UTF_8));
-        return new ResultWrapper("static/modeler.html?modelId=" + id);
+        return ResultWrapper.success("static/modeler.html?modelId=" + id);
     }
 
-    @RequestMapping("/deployment/{modelId}")
+    @PostMapping("/deployment/{modelId}")
     public ResultWrapper deploy(@PathVariable String modelId) throws Exception {
         //获取模型
         Model modelData = repositoryService.getModel(modelId);
@@ -115,5 +115,12 @@ public class ModelController {
         modelData.setDeploymentId(deployment.getId());
         repositoryService.saveModel(modelData);
         return ResultWrapper.success("流程发布成功");
+    }
+
+    @DeleteMapping("delete/{modelId}")
+    public ResultWrapper delete(@PathVariable String modelId) {
+        boolean flag = activitiService.cancelDeployProcessByModelId(modelId);
+        String result = flag == true ? "删除成功" : "删除失败";
+        return ResultWrapper.success(result);
     }
 }

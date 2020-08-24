@@ -69,10 +69,17 @@ class ActivitiApplicationTests {
 
     @Test
     void deployByModel() throws Exception {
-        String modelId = "30001";
+        String modelId = "67503";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/models/deployment/" + modelId)
+                MockMvcRequestBuilders.post("/rest/models/deployment/" + modelId)
         );
     }
 
+    @Test
+    void deleteByModel() throws Exception {
+        String modelId = "67503";
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/rest/models/delete/" + modelId)
+        );
+    }
 }

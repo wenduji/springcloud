@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @Slf4j
 public class ExceptionConfig {
+
     @ExceptionHandler(Exception.class)
     public ResultWrapper exceptionHandler(Exception exception){
         log.error("Exception: ", exception);
@@ -25,4 +26,5 @@ public class ExceptionConfig {
         }
         return resultWrapper;
     }
+
 }

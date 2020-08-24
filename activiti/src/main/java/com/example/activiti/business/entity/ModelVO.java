@@ -14,7 +14,7 @@ import lombok.Setter;
 public class ModelVO {
 
     @ApiModelProperty("model ID")
-    private String modelId;
+    private String modelID;
 
     @ApiModelProperty("流程Key")
     private String processKey;

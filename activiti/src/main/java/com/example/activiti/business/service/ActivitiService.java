@@ -2,6 +2,7 @@ package com.example.activiti.business.service;
 
 import com.example.activiti.business.context.ActivitiContext;
 import com.example.common.utils.Validate;
+import com.github.pagehelper.Page;
 import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.bpmn.model.Process;
@@ -348,11 +349,20 @@ public class ActivitiService {
         return flowList;
     }
 
-    public List<Map<String, String>> findModelList() {
+    /**
+     * 流程model信息
+     *
+     * @param firstResult
+     * @param maxResults
+     * @return
+     */
+    public Page<Map<String, String>> findModelList(int firstResult, int maxResults) {
         List<Model> modelList = ActivitiContext.getRepositoryService()
-                .createModelQuery().orderByCreateTime().desc().list();
+                .createModelQuery().orderByCreateTime().desc().listPage(firstResult, maxResults);
         Map<String, String> map;
-        List<Map<String, String>> models = new ArrayList<>(modelList.size());
+        Page<Map<String, String>> page = new Page<>();
+        int count = ActivitiContext.getRepositoryService().createModelQuery().list().size();
+        page.setTotal(count);
         for (Model model : modelList) {
             map = new HashMap<>();
             map.put("modelID", model.getId());
@@ -360,9 +370,41 @@ public class ActivitiService {
             map.put("processName", model.getName());
             map.put("createTime", String.valueOf(model.getCreateTime().getTime()));
             map.put("processStatus", null);
-            models.add(map);
+            page.add(map);
         }
-        return models;
+        return page;
+    }
+
+    /**
+     * 流程删除
+     *
+     * @param modelId 流程modelID
+     * @return 状态（true：删除；false：不允许删除）
+     */
+    @Transactional
+    public boolean cancelDeployProcessByModelId(String modelId) {
+        Validate.isNotNull(modelId);
+        Model model = ActivitiContext.getRepositoryService().createModelQuery()
+                .modelId(modelId).deployed().singleResult();
+
+        boolean flag = true;
+
+        // 判断取消流程发布时是否有正在执行的任务
+        // 若当前规则下有正在执行的流程，返回false
+        if (!ObjectUtils.isEmpty(model)) {
+            List<Task> taskList = ActivitiContext.getTaskService().createTaskQuery()
+                    .processDefinitionKey(model.getKey()).list();
+            if (ObjectUtils.isEmpty(taskList)) {
+                try {
+                    ActivitiContext.getRepositoryService().deleteDeployment(model.getDeploymentId());
+                } catch (Exception e) {
+                    flag = false;
+                }
+            } else {
+                flag = false;
+            }
+        }
+        return flag;
     }
 
 }
