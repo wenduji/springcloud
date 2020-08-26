@@ -3,12 +3,17 @@ server:
 
 spring:
   application:
-    name: flowable-service
+    name: activiti-service
   datasource:
     url: jdbc:mysql://localhost:3306/activiti?serverTimezone=GMT%2B8&useSSL=false&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
     username: root
     password: 123
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  type-aliases-package: com.example.activiti.business.entity
+  mapper-locations: classpath*:mapping/**/*Mapper.xml
+
 eureka:
   instance:
     prefer-ip-address: true

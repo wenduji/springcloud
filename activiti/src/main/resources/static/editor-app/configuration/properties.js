@@ -95,5 +95,9 @@ KISBPM.PROPERTY_CONFIG =
     "oryx-messageref-string" : {
         "readModeTemplateUrl": "editor-app/configuration/properties/default-value-display-template.html",
         "writeModeTemplateUrl": "editor-app/configuration/properties/message-property-write-template.html"
+    },
+    "oryx-taskroles-multiplecomplex": {
+        "readModeTemplateUrl": "editor-app/configuration/properties/task-roles-display-template.html",
+        "writeModeTemplateUrl": "editor-app/configuration/properties/task-roles-write-template.html"
     }
 };
