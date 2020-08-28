@@ -84,4 +84,8 @@
       approver = #{approver,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectStarterRole" resultType="String">
+    select starter from task_role where `key` = #{processKey} and task_id = #{nodeId}
+  </select>
 </mapper>

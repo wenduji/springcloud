@@ -39,9 +39,9 @@ public class ActivitiRestController {
         return new ResultWrapper<>(deployment);
     }
 
-    @PostMapping("/start/applicantId/{applicantId}")
+    @PostMapping("/start/{applicantId}")
     public void startProcess(@PathVariable String applicantId) {
-        String processKey = "sequential";
+        String processKey = "group";
         ProcessInstance processInstance = activitiService.startProcessByKeyAndUserId(processKey, applicantId);
         String processInstanceId = processInstance.getId();
         String taskId = activitiService.getTaskId(processInstanceId);
@@ -49,13 +49,13 @@ public class ActivitiRestController {
         activitiService.completeTask(taskId);
 
         // 设置下级审批人
-        taskId = activitiService.getTaskId(processInstanceId);
+        /*taskId = activitiService.getTaskId(processInstanceId);
         String userId = testRoleService.getDefaultNextApprover(applicantId);
-        activitiService.claim(taskId, userId);
+        activitiService.claim(taskId, userId);*/
 
         log.info("流程发起人ID：" + applicantId);
         log.info("流程实例ID：" + processInstanceId);
-        log.info("下级审批人ID：" + userId);
+//        log.info("下级审批人ID：" + userId);
     }
 
     @PostMapping("/approve-pass/approverId/{approverId}/processInstanceId/{processInstanceId}")
@@ -93,6 +93,18 @@ public class ActivitiRestController {
     public void close(@PathVariable String processInstanceId) {
         String deleteReason = "撤回";
         activitiService.deleteProcessInstance(processInstanceId, deleteReason);
+    }
+
+    @PostMapping("/claim/{processInstanceId}/{userId}")
+    public void claim(@PathVariable String userId, @PathVariable String processInstanceId) {
+        String taskId = activitiService.getTaskId(processInstanceId);
+        activitiService.claim(taskId, userId);
+    }
+
+    @PostMapping("/complete/{processInstanceId}")
+    public void complete(@PathVariable String processInstanceId) {
+        String taskId = activitiService.getTaskId(processInstanceId);
+        activitiService.completeTask(taskId);
     }
 
 }

@@ -26,4 +26,5 @@ public class RoleRestController {
         roleList.add("Manager C");
         return ResultWrapper.success(roleList);
     }
+
 }

@@ -1,12 +1,14 @@
 package com.example.activiti.business.listener;
 
-import com.example.activiti.business.service.RoleService;
+import com.example.activiti.business.service.TaskRoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author hjs
@@ -20,7 +22,7 @@ public class UserTaskListener implements TaskListener {
     private static final long serialVersionUID = 3751958445937091039L;
 
     @Resource
-    private RoleService testRoleService;
+    private TaskRoleService taskRoleService;
 
     @Override
     public void notify(DelegateTask delegateTask) {
@@ -31,6 +33,19 @@ public class UserTaskListener implements TaskListener {
         } else if (EVENTNAME_CREATE.equals(eventName)) {
             // 进入任务
             log.info("task create...");
+            String nodeId = delegateTask.getTaskDefinitionKey();
+            String processKey = delegateTask.getProcessDefinitionId().split(":")[0];
+            log.info("processKey:" + processKey);
+//            taskRoleService.listCandidateUsers(processKey, nodeId);
+            log.info(nodeId);
+            log.info(delegateTask.getName());
+            if ("_5".equals(nodeId)) {
+                List<String> candidateUsers = new ArrayList<>();
+                candidateUsers.add("role A");
+                candidateUsers.add("role B");
+                delegateTask.addCandidateUsers(candidateUsers);
+                log.info("add candidateUsers...");
+            }
         } else if (EVENTNAME_COMPLETE.equals(eventName)) {
             // 任务完成
             log.info("task complete...");

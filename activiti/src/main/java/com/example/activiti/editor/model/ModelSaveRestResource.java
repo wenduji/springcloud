@@ -1,5 +1,6 @@
 package com.example.activiti.editor.model;
 
+import com.example.activiti.business.service.TaskRoleService;
 import com.example.common.utils.JSONUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -34,27 +35,14 @@ public class ModelSaveRestResource implements ModelDataJsonConstants {
     @Resource
     private ObjectMapper objectMapper;
 
+    @Resource
+    private TaskRoleService taskRoleService;
+
     @PutMapping(value = "/model/{modelId}/save")
     @ResponseStatus(value = HttpStatus.OK)
     public void saveModel(HttpServletRequest request, @PathVariable String modelId) {
         try {
-            /*
-            根据流程信息设置任务处理人角色
-             */
-            ArrayList childShapesList = (ArrayList) JSONUtils.json2map(request.getParameter("json_xml")).get("childShapes");
-            for (int i = 0, size = childShapesList.size(); i < size; i++) {
-                LinkedHashMap childShapesMap = (LinkedHashMap) childShapesList.get(i);
-                LinkedHashMap stencilMap = (LinkedHashMap) childShapesMap.get("stencil");
-                if ("UserTask".equals(stencilMap.get("id"))) {
-                    LinkedHashMap propertiesMap = (LinkedHashMap) childShapesMap.get("properties");
-                    LinkedHashMap taskrolesMap = (LinkedHashMap) propertiesMap.get("taskroles");
-                    ArrayList taskRolesList = (ArrayList) taskrolesMap.get("taskRoles");
-                    for (int j = 0, len = taskRolesList.size(); j < len; j++) {
-                        LinkedHashMap map = (LinkedHashMap) taskRolesList.get(j);
-//                        System.out.println(map.get("id") + "  " + map.get("type"));
-                    }
-                }
-            }
+            taskRoleService.save(request);
 
             Model model = repositoryService.getModel(modelId);
 

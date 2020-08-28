@@ -1,15 +1,10 @@
 package com.example.activiti;
 
 import com.example.common.utils.JSONUtils;
-import org.assertj.core.util.Arrays;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 /**
  * @author hjs
@@ -69,7 +64,7 @@ public class ExtractUserTaskTest {
                 "\t}, {\n" +
                 "\t\t\"resourceId\": \"sid-D43D2F33-261D-4CF6-8DD6-AE83489C6DFD\",\n" +
                 "\t\t\"properties\": {\n" +
-                "\t\t\t\"overrideid\": \"\",\n" +
+                "\t\t\t\"overrideid\": \"1\",\n" +
                 "\t\t\t\"name\": \"\",\n" +
                 "\t\t\t\"documentation\": \"\",\n" +
                 "\t\t\t\"asynchronousdefinition\": \"false\",\n" +
@@ -159,7 +154,7 @@ public class ExtractUserTaskTest {
                 "\t}, {\n" +
                 "\t\t\"resourceId\": \"sid-0DCFB454-2BC1-42EC-B9F2-4DF3EB181D2D\",\n" +
                 "\t\t\"properties\": {\n" +
-                "\t\t\t\"overrideid\": \"\",\n" +
+                "\t\t\t\"overrideid\": \"2\",\n" +
                 "\t\t\t\"name\": \"\",\n" +
                 "\t\t\t\"documentation\": \"\",\n" +
                 "\t\t\t\"asynchronousdefinition\": \"false\",\n" +
@@ -325,12 +320,20 @@ public class ExtractUserTaskTest {
                 "\t\"ssextensions\": []\n" +
                 "}";
 
+        LinkedHashMap propertyMap = (LinkedHashMap) JSONUtils.json2map(jsonStr).get("properties");
+        String processKey = String.valueOf(propertyMap.get("process_id"));
+        System.out.println(processKey);
+
         ArrayList childShapesList = (ArrayList) JSONUtils.json2map(jsonStr).get("childShapes");
         for (int i = 0, size = childShapesList.size(); i < size; i++) {
             LinkedHashMap childShapesMap = (LinkedHashMap) childShapesList.get(i);
             LinkedHashMap stencilMap = (LinkedHashMap) childShapesMap.get("stencil");
             if ("UserTask".equals(stencilMap.get("id"))) {
                 LinkedHashMap propertiesMap = (LinkedHashMap) childShapesMap.get("properties");
+
+                String userTaskId = String.valueOf(propertiesMap.get("overrideid"));
+                System.out.println(userTaskId);
+
                 LinkedHashMap taskrolesMap = (LinkedHashMap) propertiesMap.get("taskroles");
                 ArrayList taskRolesList = (ArrayList) taskrolesMap.get("taskRoles");
                 for (int j = 0, len = taskRolesList.size(); j < len; j++) {
