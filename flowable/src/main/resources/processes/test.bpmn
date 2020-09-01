@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="&quot;http://www.omg.org/spec/BPMN/20100524/MODEL&quot;" xmlns:activiti="&quot;http://activiti.org/bpmn&quot;" xmlns:bpmndi="&quot;http://www.omg.org/spec/BPMN/20100524/DI&quot;" xmlns:omgdc="&quot;http://www.omg.org/spec/DD/20100524/DC&quot;" xmlns:omgdi="&quot;http://www.omg.org/spec/DD/20100524/DI&quot;" xmlns:xsd="&quot;http://www.w3.org/2001/XMLSchema&quot;" xmlns:xsi="&quot;http://www.w3.org/2001/XMLSchema-instance&quot;" expressionLanguage="&quot;http://www.w3.org/1999/XPath&quot;" targetNamespace="&quot;http://www.activiti.org/test&quot;" typeLanguage="&quot;http://www.w3.org/2001/XMLSchema&quot;">
+    <process id="Test" isExecutable="true" name="测试">
+        <startEvent id="start"/>
+        <endEvent id="end"/>
+        <sequenceFlow id="flow" sourceRef="start" targetRef="end"/>
+    </process>
+</definitions>
