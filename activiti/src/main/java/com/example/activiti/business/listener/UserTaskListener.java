@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author hjs
@@ -36,9 +38,11 @@ public class UserTaskListener implements TaskListener {
             String nodeId = delegateTask.getTaskDefinitionKey();
             String processKey = delegateTask.getProcessDefinitionId().split(":")[0];
             log.info("processKey:" + processKey);
-//            taskRoleService.listCandidateUsers(processKey, nodeId);
             log.info(nodeId);
             log.info(delegateTask.getName());
+            // 组任务设置任务参与人
+//            taskRoleService.listCandidateUsers(processKey, nodeId);
+            // nodeId跟数据库的taskId匹配
             if ("_5".equals(nodeId)) {
                 List<String> candidateUsers = new ArrayList<>();
                 candidateUsers.add("role A");

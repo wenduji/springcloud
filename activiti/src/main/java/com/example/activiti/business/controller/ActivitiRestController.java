@@ -6,7 +6,9 @@ import com.example.activiti.business.service.RoleService;
 import com.example.common.result.ResultWrapper;
 import com.example.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,12 +44,20 @@ public class ActivitiRestController {
 
     @PostMapping("/start/{applicantId}")
     public void startProcess(@PathVariable String applicantId) {
-        String processKey = "group";
+        String processKey = "multi_condition";
         ProcessInstance processInstance = activitiService.startProcessByKeyAndUserId(processKey, applicantId);
         String processInstanceId = processInstance.getId();
         String taskId = activitiService.getTaskId(processInstanceId);
         activitiService.claim(taskId, applicantId);
-        activitiService.completeTask(taskId);
+//        activitiService.completeTask(taskId);
+
+        // 多实例设置任务处理人
+        ArrayList<String> signerList = new ArrayList<>();
+        signerList.add("signer A");
+        signerList.add("signer B");
+        Map<String, Object> variable = new HashMap<>();
+        variable.put("signerList", signerList);
+        activitiService.completeTaskWithVariable(taskId, variable);
 
         // 设置下级审批人
         /*taskId = activitiService.getTaskId(processInstanceId);
@@ -58,7 +69,7 @@ public class ActivitiRestController {
 //        log.info("下级审批人ID：" + userId);
     }
 
-    @PostMapping("/approve-pass/approverId/{approverId}/processInstanceId/{processInstanceId}")
+    @PostMapping("/approve-pass/{approverId}/{processInstanceId}")
     public void approvePass(@PathVariable String approverId, @PathVariable String processInstanceId) {
         /*
             审批通过后，判断有没有下级审批人。
@@ -81,7 +92,7 @@ public class ActivitiRestController {
         }
     }
 
-    @PostMapping("/approve-refuse/processInstanceId/{processInstanceId}")
+    @PostMapping("/approve-refuse/{processInstanceId}")
     public void approveRefuse(@PathVariable String processInstanceId) {
         String taskId = activitiService.getTaskId(processInstanceId);
         Map<String, Object> variable = new HashMap<>();
@@ -89,7 +100,7 @@ public class ActivitiRestController {
         activitiService.completeTaskWithVariable(taskId, variable);
     }
 
-    @PostMapping("/close/processInstanceId/{processInstanceId}")
+    @PostMapping("/close/{processInstanceId}")
     public void close(@PathVariable String processInstanceId) {
         String deleteReason = "撤回";
         activitiService.deleteProcessInstance(processInstanceId, deleteReason);
@@ -103,8 +114,27 @@ public class ActivitiRestController {
 
     @PostMapping("/complete/{processInstanceId}")
     public void complete(@PathVariable String processInstanceId) {
-        String taskId = activitiService.getTaskId(processInstanceId);
-        activitiService.completeTask(taskId);
+//        String taskId = activitiService.getTaskId(processInstanceId);
+//        activitiService.completeTask(taskId);
+        // 多实例测试
+        Map<String, Object> map = new HashMap<>();
+        map.put("pass", true);
+        String taskId = "7523";
+        activitiService.completeTaskWithVariable(taskId, map);
+    }
+
+    @PostMapping("/re-start/{applicantId}")
+    public void reStartProcess(@PathVariable String applicantId) {
+        String taskId = "5006";
+        activitiService.claim(taskId, applicantId);
+
+        // 多实例
+        ArrayList<String> signerList = new ArrayList<>();
+        signerList.add("signer A");
+        signerList.add("signer B");
+        Map<String, Object> variable = new HashMap<>();
+        variable.put("signerList", signerList);
+        activitiService.completeTaskWithVariable(taskId, variable);
     }
 
 }

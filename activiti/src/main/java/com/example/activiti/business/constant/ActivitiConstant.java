@@ -33,4 +33,18 @@ public interface ActivitiConstant {
         String ADVICE_LOOP = "loop";
     }
 
+    /**
+     * 多实例完成条件变量名称
+     */
+    String MULTI_INSTANCE_VARIABLE_KEY = "pass";
+
+    /**
+     * 一票通过
+     */
+    String ONE_VOTE_PASS = "pass == true";
+
+    /**
+     * 一票否决
+     */
+    String ONE_PASS_REFUSE = "pass == false";
 }

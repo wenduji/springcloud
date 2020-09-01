@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.activiti.business.mapper.MultiInstancesMapper">
+    <resultMap id="BaseResultMap" type="com.example.activiti.business.entity.MultiInstances">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="key" jdbcType="VARCHAR" property="key"/>
+        <result column="task_id" jdbcType="VARCHAR" property="taskId"/>
+        <result column="complete_condition" jdbcType="VARCHAR" property="completeCondition"/>
+        <result column="collection" jdbcType="VARCHAR" property="collection"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, `key`, task_id, complete_condition, `collection`
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from multi_instances
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from multi_instances
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.example.activiti.business.entity.MultiInstances" useGeneratedKeys="true">
+    insert into multi_instances (`key`, task_id, complete_condition, 
+      `collection`)
+    values (#{key,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, #{completeCondition,jdbcType=VARCHAR}, 
+      #{collection,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.example.activiti.business.entity.MultiInstances" useGeneratedKeys="true">
+        insert into multi_instances
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="key != null">
+                `key`,
+            </if>
+            <if test="taskId != null">
+                task_id,
+            </if>
+            <if test="completeCondition != null">
+                complete_condition,
+            </if>
+            <if test="collection != null">
+                `collection`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="key != null">
+                #{key,jdbcType=VARCHAR},
+            </if>
+            <if test="taskId != null">
+                #{taskId,jdbcType=VARCHAR},
+            </if>
+            <if test="completeCondition != null">
+                #{completeCondition,jdbcType=VARCHAR},
+            </if>
+            <if test="collection != null">
+                #{collection,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.activiti.business.entity.MultiInstances">
+        update multi_instances
+        <set>
+            <if test="key != null">
+                `key` = #{key,jdbcType=VARCHAR},
+            </if>
+            <if test="taskId != null">
+                task_id = #{taskId,jdbcType=VARCHAR},
+            </if>
+            <if test="completeCondition != null">
+                complete_condition = #{completeCondition,jdbcType=VARCHAR},
+            </if>
+            <if test="collection != null">
+                `collection` = #{collection,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.activiti.business.entity.MultiInstances">
+    update multi_instances
+    set `key` = #{key,jdbcType=VARCHAR},
+      task_id = #{taskId,jdbcType=VARCHAR},
+      complete_condition = #{completeCondition,jdbcType=VARCHAR},
+      `collection` = #{collection,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectSelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from multi_instances
+        where `key` = #{processKey}
+        and task_id = #{nodeId}
+    </select>
+</mapper>

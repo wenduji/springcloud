@@ -47,7 +47,7 @@ class ActivitiApplicationTests {
         String approver = "c";
         String processInstanceId = "22501";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis/approve-pass/approverId/" + approver + "/processInstanceId/" + processInstanceId)
+                MockMvcRequestBuilders.post("/rest/activitis/approve-pass/" + approver + "/" + processInstanceId)
         );
     }
 
@@ -55,7 +55,7 @@ class ActivitiApplicationTests {
     void approveRefuse() throws Exception {
         String processInstanceId = "";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis/approve-refuse/processInstanceId/" + processInstanceId)
+                MockMvcRequestBuilders.post("/rest/activitis/approve-refuse/" + processInstanceId)
         );
     }
 
@@ -63,7 +63,7 @@ class ActivitiApplicationTests {
     void close() throws Exception {
         String processInstanceId = "";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis/close/processInstanceId/" + processInstanceId)
+                MockMvcRequestBuilders.post("/rest/activitis/close/" + processInstanceId)
         );
     }
 
