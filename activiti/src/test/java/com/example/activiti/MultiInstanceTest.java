@@ -61,8 +61,8 @@ public class MultiInstanceTest {
 
     @Test
     public void aVoid() {
-//        String completeCondition = "nrOfCompletedInstances/nrOfInstances > 0.6";
-        String completeCondition = "nrOfCompletedInstances>0";
+        String completeCondition = "nrOfCompletedInstances/nrOfInstances > 0.6";
+//        String completeCondition = "nrOfCompletedInstances>0";
         JexlContext jexlContext = new MapContext();
         jexlContext.set("nrOfCompletedInstances", 4f);
         jexlContext.set("nrOfInstances", 5);

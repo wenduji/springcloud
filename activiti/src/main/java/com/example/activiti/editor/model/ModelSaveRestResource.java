@@ -1,7 +1,6 @@
 package com.example.activiti.editor.model;
 
-import com.example.activiti.business.service.TaskRoleService;
-import com.example.common.utils.JSONUtils;
+import com.example.activiti.business.service.UserTaskInfoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +19,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/service")
@@ -36,13 +32,13 @@ public class ModelSaveRestResource implements ModelDataJsonConstants {
     private ObjectMapper objectMapper;
 
     @Resource
-    private TaskRoleService taskRoleService;
+    private UserTaskInfoService userTaskInfoService;
 
     @PutMapping(value = "/model/{modelId}/save")
     @ResponseStatus(value = HttpStatus.OK)
     public void saveModel(HttpServletRequest request, @PathVariable String modelId) {
         try {
-            taskRoleService.save(request);
+            userTaskInfoService.save(request);
 
             Model model = repositoryService.getModel(modelId);
 

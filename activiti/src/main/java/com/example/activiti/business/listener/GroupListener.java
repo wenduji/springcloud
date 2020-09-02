@@ -1,6 +1,6 @@
 package com.example.activiti.business.listener;
 
-import com.example.activiti.business.service.TaskRoleService;
+import com.example.activiti.business.service.UserTaskInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
@@ -8,23 +8,21 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author hjs
  * @date 2020/8/13
- * @description
+ * @description 处理组任务
  */
-@Service("userTaskListener")
+@Service("groupListener")
 @Slf4j
-public class UserTaskListener implements TaskListener {
+public class GroupListener implements TaskListener {
 
     private static final long serialVersionUID = 3751958445937091039L;
 
     @Resource
-    private TaskRoleService taskRoleService;
+    private UserTaskInfoService userTaskInfoService;
 
     @Override
     public void notify(DelegateTask delegateTask) {
@@ -37,11 +35,8 @@ public class UserTaskListener implements TaskListener {
             log.info("task create...");
             String nodeId = delegateTask.getTaskDefinitionKey();
             String processKey = delegateTask.getProcessDefinitionId().split(":")[0];
-            log.info("processKey:" + processKey);
-            log.info(nodeId);
-            log.info(delegateTask.getName());
             // 组任务设置任务参与人
-//            taskRoleService.listCandidateUsers(processKey, nodeId);
+//            userTaskInfoService.listCandidateUsers(processKey, nodeId);
             // nodeId跟数据库的taskId匹配
             if ("_5".equals(nodeId)) {
                 List<String> candidateUsers = new ArrayList<>();

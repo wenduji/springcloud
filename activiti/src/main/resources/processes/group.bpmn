@@ -7,7 +7,7 @@
     <sequenceFlow id="_4" sourceRef="_2" targetRef="_3"/>
     <userTask activiti:exclusive="true" id="_5" name="组任务">
       <extensionElements>
-        <activiti:taskListener delegateExpression="${userTaskListener}" event="create"/>
+        <activiti:taskListener delegateExpression="${groupListener}" event="create"/>
       </extensionElements>
     </userTask>
     <sequenceFlow id="_6" sourceRef="_3" targetRef="_5"/>

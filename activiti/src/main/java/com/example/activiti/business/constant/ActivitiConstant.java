@@ -47,4 +47,26 @@ public interface ActivitiConstant {
      * 一票否决
      */
     String ONE_PASS_REFUSE = "pass == false";
+
+    /**
+     * UserTask类型
+     */
+    interface user_task_type {
+
+        /**
+         * 普通UserTask
+         */
+        int NORMAL = 1;
+
+        /**
+         * 多实例
+         */
+        int MULTI_INSTANCE = 2;
+
+        /**
+         * 组任务
+         */
+        int GROUP = 3;
+    }
+
 }

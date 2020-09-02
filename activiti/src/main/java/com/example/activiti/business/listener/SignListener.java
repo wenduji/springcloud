@@ -2,8 +2,8 @@ package com.example.activiti.business.listener;
 
 import com.example.activiti.business.constant.ActivitiConstant;
 import com.example.activiti.business.context.ActivitiContext;
-import com.example.activiti.business.entity.MultiInstances;
-import com.example.activiti.business.service.MultiInstancesService;
+import com.example.activiti.business.entity.UserTaskInfo;
+import com.example.activiti.business.service.UserTaskInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.delegate.DelegateTask;
@@ -19,14 +19,16 @@ import javax.annotation.Resource;
 /**
  * @author hjs
  * @date 2020/8/28
- * @description
+ * @description 处理多实例任务
  */
 @Service("signListener")
 @Slf4j
 public class SignListener implements TaskListener {
 
+    private static final long serialVersionUID = 1400461773405329212L;
+
     @Resource
-    private MultiInstancesService multiInstancesService;
+    private UserTaskInfoService userTaskInfoService;
 
     @Override
     public void notify(DelegateTask delegateTask) {
@@ -37,8 +39,8 @@ public class SignListener implements TaskListener {
             // 根据流程key、任务节点获取多实例的完成条件
             String processKey = delegateTask.getProcessDefinitionId().split(":")[0];
             String nodeId = delegateTask.getTaskDefinitionKey();
-            MultiInstances multiInstances = multiInstancesService.selectSelective(processKey, nodeId);
-            String completeCondition = multiInstances.getCompleteCondition();
+            UserTaskInfo userTaskInfo = userTaskInfoService.selectSelective(processKey, nodeId);
+            String completeCondition = userTaskInfo.getCompleteCondition();
             completeCondition = completeCondition.replaceAll("\\$\\{", "").replaceAll("}", "");
             log.info("completeCondition:" + completeCondition);
 
@@ -96,15 +98,14 @@ public class SignListener implements TaskListener {
      * @param completeCondition      完成条件
      * @param nrOfCompletedInstances 已完成的实例
      * @param nrOfInstances          总实例
-     * @return
+     * @return 计算结果：true：满足，false：不满足
      */
-    public boolean judge(String completeCondition, int nrOfCompletedInstances, int nrOfInstances) {
+    private boolean judge(String completeCondition, int nrOfCompletedInstances, int nrOfInstances) {
         JexlContext jexlContext = new MapContext();
         // 如果一个审批人完成了审批，进入到该监听时nrOfCompletedInstances的值还没有更新，因此需要+1
         jexlContext.set("nrOfCompletedInstances", (float) nrOfCompletedInstances + 1);
         jexlContext.set("nrOfInstances", nrOfInstances);
         Expression e = new JexlEngine().createExpression(completeCondition);
-        Boolean flag = (Boolean) e.evaluate(jexlContext);
-        return flag;
+        return (Boolean) e.evaluate(jexlContext);
     }
 }

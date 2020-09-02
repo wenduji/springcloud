@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.activiti.business.mapper.UserTaskInfoMapper">
+    <resultMap id="BaseResultMap" type="com.example.activiti.business.entity.UserTaskInfo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="process_key" jdbcType="VARCHAR" property="processKey"/>
+        <result column="node_id" jdbcType="VARCHAR" property="nodeId"/>
+        <result column="node_name" jdbcType="VARCHAR" property="nodeName"/>
+        <result column="node_type" jdbcType="INTEGER" property="nodeType"/>
+        <result column="handlers_role" jdbcType="VARCHAR" property="handlersRole"/>
+        <result column="complete_condition" jdbcType="VARCHAR" property="completeCondition"/>
+        <result column="collection" jdbcType="VARCHAR" property="collection"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, process_key, node_id, node_name, node_type, handlers_role, complete_condition, 
+    `collection`
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_task_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_task_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id"
+            parameterType="com.example.activiti.business.entity.UserTaskInfo" useGeneratedKeys="true">
+    insert into user_task_info (process_key, node_id, node_name, 
+      node_type, handlers_role, complete_condition, 
+      `collection`)
+    values (#{processKey,jdbcType=VARCHAR}, #{nodeId,jdbcType=VARCHAR}, #{nodeName,jdbcType=VARCHAR}, 
+      #{nodeType,jdbcType=INTEGER}, #{handlersRole,jdbcType=VARCHAR}, #{completeCondition,jdbcType=VARCHAR}, 
+      #{collection,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.example.activiti.business.entity.UserTaskInfo" useGeneratedKeys="true">
+        insert into user_task_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="processKey != null">
+                process_key,
+            </if>
+            <if test="nodeId != null">
+                node_id,
+            </if>
+            <if test="nodeName != null">
+                node_name,
+            </if>
+            <if test="nodeType != null">
+                node_type,
+            </if>
+            <if test="handlersRole != null">
+                handlers_role,
+            </if>
+            <if test="completeCondition != null">
+                complete_condition,
+            </if>
+            <if test="collection != null">
+                `collection`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="processKey != null">
+                #{processKey,jdbcType=VARCHAR},
+            </if>
+            <if test="nodeId != null">
+                #{nodeId,jdbcType=VARCHAR},
+            </if>
+            <if test="nodeName != null">
+                #{nodeName,jdbcType=VARCHAR},
+            </if>
+            <if test="nodeType != null">
+                #{nodeType,jdbcType=INTEGER},
+            </if>
+            <if test="handlersRole != null">
+                #{handlersRole,jdbcType=VARCHAR},
+            </if>
+            <if test="completeCondition != null">
+                #{completeCondition,jdbcType=VARCHAR},
+            </if>
+            <if test="collection != null">
+                #{collection,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.activiti.business.entity.UserTaskInfo">
+        update user_task_info
+        <set>
+            <if test="processKey != null">
+                process_key = #{processKey,jdbcType=VARCHAR},
+            </if>
+            <if test="nodeId != null">
+                node_id = #{nodeId,jdbcType=VARCHAR},
+            </if>
+            <if test="nodeName != null">
+                node_name = #{nodeName,jdbcType=VARCHAR},
+            </if>
+            <if test="nodeType != null">
+                node_type = #{nodeType,jdbcType=INTEGER},
+            </if>
+            <if test="handlersRole != null">
+                handlers_role = #{handlersRole,jdbcType=VARCHAR},
+            </if>
+            <if test="completeCondition != null">
+                complete_condition = #{completeCondition,jdbcType=VARCHAR},
+            </if>
+            <if test="collection != null">
+                `collection` = #{collection,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.activiti.business.entity.UserTaskInfo">
+    update user_task_info
+    set process_key = #{processKey,jdbcType=VARCHAR},
+      node_id = #{nodeId,jdbcType=VARCHAR},
+      node_name = #{nodeName,jdbcType=VARCHAR},
+      node_type = #{nodeType,jdbcType=INTEGER},
+      handlers_role = #{handlersRole,jdbcType=VARCHAR},
+      complete_condition = #{completeCondition,jdbcType=VARCHAR},
+      `collection` = #{collection,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectSelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_task_info
+        where process_key = #{processKey} and node_id = #{nodeId}
+    </select>
+</mapper>

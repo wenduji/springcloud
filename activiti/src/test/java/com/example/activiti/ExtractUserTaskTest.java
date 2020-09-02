@@ -2,6 +2,7 @@ package com.example.activiti;
 
 import com.example.common.utils.JSONUtils;
 import org.junit.Test;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -16,9 +17,9 @@ public class ExtractUserTaskTest {
     @Test
     public void test() {
         String jsonStr = "{\n" +
-                "\t\"resourceId\": \"185001\",\n" +
+                "\t\"resourceId\": \"17501\",\n" +
                 "\t\"properties\": {\n" +
-                "\t\t\"process_id\": \"mockA\",\n" +
+                "\t\t\"process_id\": \"process\",\n" +
                 "\t\t\"name\": \"\",\n" +
                 "\t\t\"documentation\": \"\",\n" +
                 "\t\t\"process_author\": \"\",\n" +
@@ -33,7 +34,7 @@ public class ExtractUserTaskTest {
                 "\t\t\"id\": \"BPMNDiagram\"\n" +
                 "\t},\n" +
                 "\t\"childShapes\": [{\n" +
-                "\t\t\"resourceId\": \"sid-A64B3C4C-D9D6-4E68-9F3B-56B351DCE91B\",\n" +
+                "\t\t\"resourceId\": \"sid-174F8354-FC55-4529-BB9F-8EEFB5C8AA1D\",\n" +
                 "\t\t\"properties\": {\n" +
                 "\t\t\t\"overrideid\": \"\",\n" +
                 "\t\t\t\"name\": \"\",\n" +
@@ -48,29 +49,29 @@ public class ExtractUserTaskTest {
                 "\t\t},\n" +
                 "\t\t\"childShapes\": [],\n" +
                 "\t\t\"outgoing\": [{\n" +
-                "\t\t\t\"resourceId\": \"sid-7CD7F118-3358-4B2C-B6A4-A39705C2087C\"\n" +
+                "\t\t\t\"resourceId\": \"sid-680CB4F6-59DB-45DE-AEF3-442CE8493D0E\"\n" +
                 "\t\t}],\n" +
                 "\t\t\"bounds\": {\n" +
                 "\t\t\t\"lowerRight\": {\n" +
                 "\t\t\t\t\"x\": 126,\n" +
-                "\t\t\t\t\"y\": 61\n" +
+                "\t\t\t\t\"y\": 78\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"upperLeft\": {\n" +
                 "\t\t\t\t\"x\": 96,\n" +
-                "\t\t\t\t\"y\": 31\n" +
+                "\t\t\t\t\"y\": 48\n" +
                 "\t\t\t}\n" +
                 "\t\t},\n" +
                 "\t\t\"dockers\": []\n" +
                 "\t}, {\n" +
-                "\t\t\"resourceId\": \"sid-D43D2F33-261D-4CF6-8DD6-AE83489C6DFD\",\n" +
+                "\t\t\"resourceId\": \"sid-74516028-4312-4F62-BF30-A5616C2EA4C8\",\n" +
                 "\t\t\"properties\": {\n" +
                 "\t\t\t\"overrideid\": \"1\",\n" +
-                "\t\t\t\"name\": \"\",\n" +
+                "\t\t\t\"name\": \"多实例\",\n" +
                 "\t\t\t\"documentation\": \"\",\n" +
                 "\t\t\t\"asynchronousdefinition\": \"false\",\n" +
                 "\t\t\t\"exclusivedefinition\": \"false\",\n" +
                 "\t\t\t\"executionlisteners\": \"\",\n" +
-                "\t\t\t\"multiinstance_type\": \"None\",\n" +
+                "\t\t\t\"multiinstance_type\": \"Parallel\",\n" +
                 "\t\t\t\"multiinstance_cardinality\": \"\",\n" +
                 "\t\t\t\"multiinstance_collection\": \"\",\n" +
                 "\t\t\t\"multiinstance_variable\": \"\",\n" +
@@ -85,12 +86,12 @@ public class ExtractUserTaskTest {
                 "\t\t\t\"taskroles\": {\n" +
                 "\t\t\t\t\"taskRoles\": [{\n" +
                 "\t\t\t\t\t\"id\": 1,\n" +
-                "\t\t\t\t\t\"type\": \"Normal\",\n" +
+                "\t\t\t\t\t\"type\": \"Manager A\",\n" +
                 "\t\t\t\t\t\"readable\": true,\n" +
                 "\t\t\t\t\t\"writable\": true\n" +
                 "\t\t\t\t}, {\n" +
                 "\t\t\t\t\t\"id\": 2,\n" +
-                "\t\t\t\t\t\"type\": \"Manager A\",\n" +
+                "\t\t\t\t\t\"type\": \"Manager B\",\n" +
                 "\t\t\t\t\t\"readable\": true,\n" +
                 "\t\t\t\t\t\"writable\": true\n" +
                 "\t\t\t\t}]\n" +
@@ -101,21 +102,21 @@ public class ExtractUserTaskTest {
                 "\t\t},\n" +
                 "\t\t\"childShapes\": [],\n" +
                 "\t\t\"outgoing\": [{\n" +
-                "\t\t\t\"resourceId\": \"sid-ABC60132-98A6-4C10-A7F9-FB2AC07D55A0\"\n" +
+                "\t\t\t\"resourceId\": \"sid-B76EC3C9-7D9E-4043-89E2-E351EFCF7819\"\n" +
                 "\t\t}],\n" +
                 "\t\t\"bounds\": {\n" +
                 "\t\t\t\"lowerRight\": {\n" +
-                "\t\t\t\t\"x\": 271,\n" +
-                "\t\t\t\t\"y\": 86\n" +
+                "\t\t\t\t\"x\": 265,\n" +
+                "\t\t\t\t\"y\": 95\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"upperLeft\": {\n" +
-                "\t\t\t\t\"x\": 171,\n" +
-                "\t\t\t\t\"y\": 6\n" +
+                "\t\t\t\t\"x\": 165,\n" +
+                "\t\t\t\t\"y\": 15\n" +
                 "\t\t\t}\n" +
                 "\t\t},\n" +
                 "\t\t\"dockers\": []\n" +
                 "\t}, {\n" +
-                "\t\t\"resourceId\": \"sid-7CD7F118-3358-4B2C-B6A4-A39705C2087C\",\n" +
+                "\t\t\"resourceId\": \"sid-680CB4F6-59DB-45DE-AEF3-442CE8493D0E\",\n" +
                 "\t\t\"properties\": {\n" +
                 "\t\t\t\"overrideid\": \"\",\n" +
                 "\t\t\t\"name\": \"\",\n" +
@@ -129,16 +130,16 @@ public class ExtractUserTaskTest {
                 "\t\t},\n" +
                 "\t\t\"childShapes\": [],\n" +
                 "\t\t\"outgoing\": [{\n" +
-                "\t\t\t\"resourceId\": \"sid-D43D2F33-261D-4CF6-8DD6-AE83489C6DFD\"\n" +
+                "\t\t\t\"resourceId\": \"sid-74516028-4312-4F62-BF30-A5616C2EA4C8\"\n" +
                 "\t\t}],\n" +
                 "\t\t\"bounds\": {\n" +
                 "\t\t\t\"lowerRight\": {\n" +
-                "\t\t\t\t\"x\": 170.15625,\n" +
-                "\t\t\t\t\"y\": 46\n" +
+                "\t\t\t\t\"x\": 164.4404455144984,\n" +
+                "\t\t\t\t\"y\": 61.798303501115264\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"upperLeft\": {\n" +
-                "\t\t\t\t\"x\": 126.609375,\n" +
-                "\t\t\t\t\"y\": 46\n" +
+                "\t\t\t\t\"x\": 126.62205448550158,\n" +
+                "\t\t\t\t\"y\": 58.889196498884736\n" +
                 "\t\t\t}\n" +
                 "\t\t},\n" +
                 "\t\t\"dockers\": [{\n" +
@@ -149,13 +150,13 @@ public class ExtractUserTaskTest {
                 "\t\t\t\"y\": 40\n" +
                 "\t\t}],\n" +
                 "\t\t\"target\": {\n" +
-                "\t\t\t\"resourceId\": \"sid-D43D2F33-261D-4CF6-8DD6-AE83489C6DFD\"\n" +
+                "\t\t\t\"resourceId\": \"sid-74516028-4312-4F62-BF30-A5616C2EA4C8\"\n" +
                 "\t\t}\n" +
                 "\t}, {\n" +
-                "\t\t\"resourceId\": \"sid-0DCFB454-2BC1-42EC-B9F2-4DF3EB181D2D\",\n" +
+                "\t\t\"resourceId\": \"sid-192DF18F-0317-4FC0-B265-0C2E15D1E845\",\n" +
                 "\t\t\"properties\": {\n" +
                 "\t\t\t\"overrideid\": \"2\",\n" +
-                "\t\t\t\"name\": \"\",\n" +
+                "\t\t\t\"name\": \"组任务\",\n" +
                 "\t\t\t\"documentation\": \"\",\n" +
                 "\t\t\t\"asynchronousdefinition\": \"false\",\n" +
                 "\t\t\t\"exclusivedefinition\": \"false\",\n" +
@@ -171,16 +172,24 @@ public class ExtractUserTaskTest {
                 "\t\t\t\"duedatedefinition\": \"\",\n" +
                 "\t\t\t\"prioritydefinition\": \"\",\n" +
                 "\t\t\t\"formproperties\": \"\",\n" +
-                "\t\t\t\"tasklisteners\": \"\",\n" +
+                "\t\t\t\"tasklisteners\": {\n" +
+                "\t\t\t\t\"taskListeners\": [{\n" +
+                "\t\t\t\t\t\"event\": \"create\",\n" +
+                "\t\t\t\t\t\"implementation\": \"${userTaskListener}\",\n" +
+                "\t\t\t\t\t\"className\": \"\",\n" +
+                "\t\t\t\t\t\"expression\": \"\",\n" +
+                "\t\t\t\t\t\"delegateExpression\": \"${userTaskListener}\"\n" +
+                "\t\t\t\t}]\n" +
+                "\t\t\t},\n" +
                 "\t\t\t\"taskroles\": {\n" +
                 "\t\t\t\t\"taskRoles\": [{\n" +
                 "\t\t\t\t\t\"id\": 1,\n" +
-                "\t\t\t\t\t\"type\": \"Manager B\",\n" +
+                "\t\t\t\t\t\"type\": \"Normal\",\n" +
                 "\t\t\t\t\t\"readable\": true,\n" +
                 "\t\t\t\t\t\"writable\": true\n" +
                 "\t\t\t\t}, {\n" +
                 "\t\t\t\t\t\"id\": 2,\n" +
-                "\t\t\t\t\t\"type\": \"Manager C\",\n" +
+                "\t\t\t\t\t\"type\": \"Manager B\",\n" +
                 "\t\t\t\t\t\"readable\": true,\n" +
                 "\t\t\t\t\t\"writable\": true\n" +
                 "\t\t\t\t}]\n" +
@@ -191,21 +200,21 @@ public class ExtractUserTaskTest {
                 "\t\t},\n" +
                 "\t\t\"childShapes\": [],\n" +
                 "\t\t\"outgoing\": [{\n" +
-                "\t\t\t\"resourceId\": \"sid-FF4F99BF-EC1D-450A-92EF-91E2A1DB5043\"\n" +
+                "\t\t\t\"resourceId\": \"sid-5BD03004-0829-4AF4-AB37-5EE0ED16FEEE\"\n" +
                 "\t\t}],\n" +
                 "\t\t\"bounds\": {\n" +
                 "\t\t\t\"lowerRight\": {\n" +
                 "\t\t\t\t\"x\": 416,\n" +
-                "\t\t\t\t\"y\": 86\n" +
+                "\t\t\t\t\"y\": 103\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"upperLeft\": {\n" +
                 "\t\t\t\t\"x\": 316,\n" +
-                "\t\t\t\t\"y\": 6\n" +
+                "\t\t\t\t\"y\": 23\n" +
                 "\t\t\t}\n" +
                 "\t\t},\n" +
                 "\t\t\"dockers\": []\n" +
                 "\t}, {\n" +
-                "\t\t\"resourceId\": \"sid-ABC60132-98A6-4C10-A7F9-FB2AC07D55A0\",\n" +
+                "\t\t\"resourceId\": \"sid-B76EC3C9-7D9E-4043-89E2-E351EFCF7819\",\n" +
                 "\t\t\"properties\": {\n" +
                 "\t\t\t\"overrideid\": \"\",\n" +
                 "\t\t\t\"name\": \"\",\n" +
@@ -219,30 +228,36 @@ public class ExtractUserTaskTest {
                 "\t\t},\n" +
                 "\t\t\"childShapes\": [],\n" +
                 "\t\t\"outgoing\": [{\n" +
-                "\t\t\t\"resourceId\": \"sid-0DCFB454-2BC1-42EC-B9F2-4DF3EB181D2D\"\n" +
+                "\t\t\t\"resourceId\": \"sid-192DF18F-0317-4FC0-B265-0C2E15D1E845\"\n" +
                 "\t\t}],\n" +
                 "\t\t\"bounds\": {\n" +
                 "\t\t\t\"lowerRight\": {\n" +
-                "\t\t\t\t\"x\": 315.15625,\n" +
-                "\t\t\t\t\"y\": 46\n" +
+                "\t\t\t\t\"x\": 315.453125,\n" +
+                "\t\t\t\t\"y\": 63\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"upperLeft\": {\n" +
-                "\t\t\t\t\"x\": 271.84375,\n" +
-                "\t\t\t\t\"y\": 46\n" +
+                "\t\t\t\t\"x\": 265.546875,\n" +
+                "\t\t\t\t\"y\": 55\n" +
                 "\t\t\t}\n" +
                 "\t\t},\n" +
                 "\t\t\"dockers\": [{\n" +
                 "\t\t\t\"x\": 50,\n" +
                 "\t\t\t\"y\": 40\n" +
                 "\t\t}, {\n" +
+                "\t\t\t\"x\": 290.5,\n" +
+                "\t\t\t\"y\": 55\n" +
+                "\t\t}, {\n" +
+                "\t\t\t\"x\": 290.5,\n" +
+                "\t\t\t\"y\": 63\n" +
+                "\t\t}, {\n" +
                 "\t\t\t\"x\": 50,\n" +
                 "\t\t\t\"y\": 40\n" +
                 "\t\t}],\n" +
                 "\t\t\"target\": {\n" +
-                "\t\t\t\"resourceId\": \"sid-0DCFB454-2BC1-42EC-B9F2-4DF3EB181D2D\"\n" +
+                "\t\t\t\"resourceId\": \"sid-192DF18F-0317-4FC0-B265-0C2E15D1E845\"\n" +
                 "\t\t}\n" +
                 "\t}, {\n" +
-                "\t\t\"resourceId\": \"sid-AE26FD2B-010A-474B-AE14-B200E270A089\",\n" +
+                "\t\t\"resourceId\": \"sid-A852B229-9946-4E3C-AACF-1681DD13B124\",\n" +
                 "\t\t\"properties\": {\n" +
                 "\t\t\t\"overrideid\": \"\",\n" +
                 "\t\t\t\"name\": \"\",\n" +
@@ -257,16 +272,16 @@ public class ExtractUserTaskTest {
                 "\t\t\"bounds\": {\n" +
                 "\t\t\t\"lowerRight\": {\n" +
                 "\t\t\t\t\"x\": 489,\n" +
-                "\t\t\t\t\"y\": 60\n" +
+                "\t\t\t\t\"y\": 77\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"upperLeft\": {\n" +
                 "\t\t\t\t\"x\": 461,\n" +
-                "\t\t\t\t\"y\": 32\n" +
+                "\t\t\t\t\"y\": 49\n" +
                 "\t\t\t}\n" +
                 "\t\t},\n" +
                 "\t\t\"dockers\": []\n" +
                 "\t}, {\n" +
-                "\t\t\"resourceId\": \"sid-FF4F99BF-EC1D-450A-92EF-91E2A1DB5043\",\n" +
+                "\t\t\"resourceId\": \"sid-5BD03004-0829-4AF4-AB37-5EE0ED16FEEE\",\n" +
                 "\t\t\"properties\": {\n" +
                 "\t\t\t\"overrideid\": \"\",\n" +
                 "\t\t\t\"name\": \"\",\n" +
@@ -280,16 +295,16 @@ public class ExtractUserTaskTest {
                 "\t\t},\n" +
                 "\t\t\"childShapes\": [],\n" +
                 "\t\t\"outgoing\": [{\n" +
-                "\t\t\t\"resourceId\": \"sid-AE26FD2B-010A-474B-AE14-B200E270A089\"\n" +
+                "\t\t\t\"resourceId\": \"sid-A852B229-9946-4E3C-AACF-1681DD13B124\"\n" +
                 "\t\t}],\n" +
                 "\t\t\"bounds\": {\n" +
                 "\t\t\t\"lowerRight\": {\n" +
                 "\t\t\t\t\"x\": 460.375,\n" +
-                "\t\t\t\t\"y\": 46\n" +
+                "\t\t\t\t\"y\": 63\n" +
                 "\t\t\t},\n" +
                 "\t\t\t\"upperLeft\": {\n" +
                 "\t\t\t\t\"x\": 416.390625,\n" +
-                "\t\t\t\t\"y\": 46\n" +
+                "\t\t\t\t\"y\": 63\n" +
                 "\t\t\t}\n" +
                 "\t\t},\n" +
                 "\t\t\"dockers\": [{\n" +
@@ -300,7 +315,7 @@ public class ExtractUserTaskTest {
                 "\t\t\t\"y\": 14\n" +
                 "\t\t}],\n" +
                 "\t\t\"target\": {\n" +
-                "\t\t\t\"resourceId\": \"sid-AE26FD2B-010A-474B-AE14-B200E270A089\"\n" +
+                "\t\t\t\"resourceId\": \"sid-A852B229-9946-4E3C-AACF-1681DD13B124\"\n" +
                 "\t\t}\n" +
                 "\t}],\n" +
                 "\t\"bounds\": {\n" +
@@ -336,9 +351,21 @@ public class ExtractUserTaskTest {
 
                 LinkedHashMap taskrolesMap = (LinkedHashMap) propertiesMap.get("taskroles");
                 ArrayList taskRolesList = (ArrayList) taskrolesMap.get("taskRoles");
+                StringBuilder stringBuilder = new StringBuilder();
                 for (int j = 0, len = taskRolesList.size(); j < len; j++) {
                     LinkedHashMap map = (LinkedHashMap) taskRolesList.get(j);
                     System.out.println(map.get("id") + "  " + map.get("type"));
+                    stringBuilder.append(map.get("type")).append(",");
+                }
+                System.out.println(stringBuilder.substring(0, stringBuilder.length() - 1));
+
+                if (!ObjectUtils.isEmpty(propertiesMap.get("tasklisteners"))) {
+                    LinkedHashMap tasklistenersMap = (LinkedHashMap) propertiesMap.get("tasklisteners");
+                    ArrayList tasklistenersList = (ArrayList) tasklistenersMap.get("taskListeners");
+                    for (int j = 0, len = tasklistenersList.size(); j < len; j++) {
+                        LinkedHashMap map = (LinkedHashMap) tasklistenersList.get(j);
+                        System.out.println(map.get("event") + "  " + map.get("delegateExpression"));
+                    }
                 }
             }
         }
