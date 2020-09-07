@@ -26,9 +26,9 @@ import java.util.Map;
  * @description
  */
 @RestController
-@RequestMapping("/rest/activitis")
+@RequestMapping("/rest/test/activitis")
 @Slf4j
-public class ActivitiRestController {
+public class ActivitiTestRestController {
 
     @Resource
     private ActivitiService activitiService;

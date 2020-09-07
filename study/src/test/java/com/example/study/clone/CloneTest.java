@@ -20,15 +20,14 @@ public class CloneTest {
 
         // 深度克隆的2种方式
         // 1、Person类实现Serializable接口，通过序列化实现深度克隆
-        /*Person p = (Person) SerializationUtils.clone(person);
+        Person p = (Person) SerializationUtils.clone(person);
         p.setName("Jolin");
-        p.getArrFavor()[0] = "badminton";*/
+        p.getArrFavor()[0] = "badminton";
 
         // 2、重写clone()
-        Person p = (Person) person.clone();
+        /*Person p = (Person) person.clone();
         p.setName("Jolin");
-        p.setPassword("555");
-        p.getArrFavor()[0] = "badminton";
+        p.getArrFavor()[0] = "badminton";*/
 
         System.out.println("原对象：");
         System.out.println(person.getName());

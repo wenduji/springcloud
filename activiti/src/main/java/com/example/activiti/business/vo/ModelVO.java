@@ -1,4 +1,4 @@
-package com.example.activiti.business.entity;
+package com.example.activiti.business.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

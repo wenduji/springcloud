@@ -44,19 +44,24 @@ public class UserTaskInfoService {
                 LinkedHashMap propertiesMap = (LinkedHashMap) childShapesMap.get("properties");
                 String userTaskId = String.valueOf(propertiesMap.get("overrideid"));
                 String userTaskName = String.valueOf(propertiesMap.get("name"));
-                LinkedHashMap taskRolesMap = (LinkedHashMap) propertiesMap.get("taskroles");
-                ArrayList taskRolesList = (ArrayList) taskRolesMap.get("taskRoles");
-                StringBuilder roles = new StringBuilder();
-                for (Object o1 : taskRolesList) {
-                    LinkedHashMap map = (LinkedHashMap) o1;
-                    roles.append(map.get("type")).append(",");
+
+                String handlerRole = "";
+                if (StringUtils.isNotEmpty(String.valueOf(propertiesMap.get("taskroles")))) {
+                    LinkedHashMap taskRolesMap = (LinkedHashMap) propertiesMap.get("taskroles");
+                    ArrayList taskRolesList = (ArrayList) taskRolesMap.get("taskRoles");
+                    StringBuilder roles = new StringBuilder();
+                    for (Object o1 : taskRolesList) {
+                        LinkedHashMap map = (LinkedHashMap) o1;
+                        roles.append(map.get("type")).append(",");
+                    }
+                    handlerRole = roles.substring(0, roles.length() - 1);
                 }
 
                 userTaskInfo = new UserTaskInfo();
                 userTaskInfo.setProcessKey(processKey);
                 userTaskInfo.setNodeId(userTaskId);
                 userTaskInfo.setNodeName(userTaskName);
-                userTaskInfo.setHandlersRole(roles.substring(0, roles.length() - 1));
+                userTaskInfo.setHandlersRole(handlerRole);
                 userTaskInfo.setNodeType(ActivitiConstant.user_task_type.NORMAL);
 
                 // 多实例属性
@@ -82,7 +87,7 @@ public class UserTaskInfoService {
 
                 }
 
-//                userTaskInfoMapper.insertSelective(userTaskInfo);
+                userTaskInfoMapper.insertSelective(userTaskInfo);
             }
         }
     }
@@ -92,10 +97,10 @@ public class UserTaskInfoService {
     }
 
     /**
-     * 查询组任务人员
+     * 查询组任务参与人员
      *
      * @param processKey 流程key
-     * @param nodeId UserTask id
+     * @param nodeId     UserTask id
      */
     public List<String> listCandidateUsers(String processKey, String nodeId) {
         // todo

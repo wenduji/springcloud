@@ -49,4 +49,8 @@ public class ActivitiContext {
     public static RepositoryService getRepositoryService() {
         return processEngine.getRepositoryService();
     }
+
+    public static FormService getFormService() {
+        return processEngine.getFormService();
+    }
 }

@@ -27,7 +27,7 @@ public class GroupTaskTest {
     public void deploy() throws Exception {
         String bpmnFileNamePrefix = "group";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis/deploy/" + bpmnFileNamePrefix)
+                MockMvcRequestBuilders.post("/rest/test/activitis/deploy/" + bpmnFileNamePrefix)
         );
     }
 
@@ -35,7 +35,7 @@ public class GroupTaskTest {
     public void start() throws Exception {
         String starter = "b";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis/start/" + starter)
+                MockMvcRequestBuilders.post("/rest/test/activitis/start/" + starter)
         );
     }
 
@@ -44,7 +44,7 @@ public class GroupTaskTest {
         String processInstanceId = "15001";
         String userId = "role A";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis/claim/" + processInstanceId + "/" + userId)
+                MockMvcRequestBuilders.post("/rest/test/activitis/claim/" + processInstanceId + "/" + userId)
         );
     }
 
@@ -52,7 +52,7 @@ public class GroupTaskTest {
     public void complete() throws Exception {
         String processInstanceId = "15001";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis/complete/" + processInstanceId)
+                MockMvcRequestBuilders.post("/rest/test/activitis/complete/" + processInstanceId)
         );
     }
 

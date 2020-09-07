@@ -22,7 +22,7 @@ class ActivitiApplicationTests {
     void deploy() throws Exception {
         String bpmnFileNamePrefix = "sequential";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis/deploy/" + bpmnFileNamePrefix)
+                MockMvcRequestBuilders.post("/rest/test/activitis/deploy/" + bpmnFileNamePrefix)
         );
     }
 
@@ -38,7 +38,7 @@ class ActivitiApplicationTests {
     void start() throws Exception {
         String starter = "a";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis/start/applicantId/" + starter)
+                MockMvcRequestBuilders.post("/rest/test/activitis/start/applicantId/" + starter)
         );
     }
 
@@ -47,7 +47,7 @@ class ActivitiApplicationTests {
         String approver = "c";
         String processInstanceId = "22501";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis/approve-pass/" + approver + "/" + processInstanceId)
+                MockMvcRequestBuilders.post("/rest/test/activitis/approve-pass/" + approver + "/" + processInstanceId)
         );
     }
 
@@ -55,7 +55,7 @@ class ActivitiApplicationTests {
     void approveRefuse() throws Exception {
         String processInstanceId = "";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis/approve-refuse/" + processInstanceId)
+                MockMvcRequestBuilders.post("/rest/test/activitis/approve-refuse/" + processInstanceId)
         );
     }
 
@@ -63,13 +63,13 @@ class ActivitiApplicationTests {
     void close() throws Exception {
         String processInstanceId = "";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis/close/" + processInstanceId)
+                MockMvcRequestBuilders.post("/rest/test/activitis/close/" + processInstanceId)
         );
     }
 
     @Test
     void deployByModel() throws Exception {
-        String modelId = "67503";
+        String modelId = "5004";
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/rest/models/deployment/" + modelId)
         );

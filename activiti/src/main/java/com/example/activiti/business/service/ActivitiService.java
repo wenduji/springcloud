@@ -1,12 +1,14 @@
 package com.example.activiti.business.service;
 
 import com.example.activiti.business.context.ActivitiContext;
+import com.example.common.utils.JSONUtils;
 import com.example.common.utils.Validate;
 import com.github.pagehelper.Page;
 import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.bpmn.model.Process;
 import org.activiti.bpmn.model.UserTask;
+import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricVariableInstance;
@@ -407,4 +409,17 @@ public class ActivitiService {
         return flag;
     }
 
+    /**
+     * 获取流程表单信息
+     *
+     * @param processKey 流程key
+     */
+    public List<FormProperty> getProcessFormData(String processKey) {
+        String processDefinitionId = ActivitiContext.getRepositoryService()
+                .createProcessDefinitionQuery().processDefinitionKey(processKey)
+                .singleResult().getId();
+        List<FormProperty> formPropertyList = ActivitiContext.getFormService()
+                .getStartFormData(processDefinitionId).getFormProperties();
+        return formPropertyList;
+    }
 }

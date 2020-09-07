@@ -31,7 +31,7 @@ public class MultiInstanceTest {
     public void deploy() throws Exception {
         String bpmnFileNamePrefix = "multi_condition";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis/deploy/" + bpmnFileNamePrefix)
+                MockMvcRequestBuilders.post("/rest/test/activitis/deploy/" + bpmnFileNamePrefix)
         );
     }
 
@@ -39,7 +39,7 @@ public class MultiInstanceTest {
     public void start() throws Exception {
         String starter = "b";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis/start/" + starter)
+                MockMvcRequestBuilders.post("/rest/test/activitis/start/" + starter)
         );
     }
 
@@ -47,7 +47,7 @@ public class MultiInstanceTest {
     public void complete() throws Exception {
         String processInstanceId = "2501";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis/complete/" + processInstanceId)
+                MockMvcRequestBuilders.post("/rest/test/activitis/complete/" + processInstanceId)
         );
     }
 
@@ -55,7 +55,7 @@ public class MultiInstanceTest {
     public void reApply() throws Exception {
         String applicantId = "a";
         mockMvc.perform(
-                MockMvcRequestBuilders.post("/rest/activitis/re-start/" + applicantId)
+                MockMvcRequestBuilders.post("/rest/test/activitis/re-start/" + applicantId)
         );
     }
 
