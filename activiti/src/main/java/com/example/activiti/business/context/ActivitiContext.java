@@ -1,9 +1,14 @@
 package com.example.activiti.business.context;
 
+import com.example.activiti.business.entity.CheckBoxFormType;
 import com.example.activiti.business.listener.ProcessEngineLifeCycleListener;
 import org.activiti.engine.*;
+import org.activiti.engine.form.AbstractFormType;
 import org.activiti.spring.SpringProcessEngineConfiguration;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author hjs
@@ -21,7 +26,11 @@ public class ActivitiContext {
         if (processEngine == null) {
             synchronized (ActivitiContext.class) {
                 if (processEngine == null) {
+                    List<AbstractFormType> customFormTypes = Arrays.asList(new CheckBoxFormType());
                     springProcessEngineConfiguration
+                            // 自定义Form变量类型
+                            .setCustomFormTypes(customFormTypes)
+                            // 设置流程引擎生命监听器
                             .setProcessEngineLifecycleListener(new ProcessEngineLifeCycleListener());
                     processEngine = springProcessEngineConfiguration.buildProcessEngine();
                 }
